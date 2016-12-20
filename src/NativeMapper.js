@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { DeviceEventEmitter, StyleSheet } from 'react-native';
+import {
+  DeviceEventEmitter,
+  StyleSheet,
+  View,
+  Text,
+  Button
+} from 'react-native';
 import { RNLocation as Location } from 'NativeModules';
 import MapView from 'react-native-maps';
 
@@ -38,32 +44,46 @@ export default class NativeMapper extends Component {
       longitudeDelta: 0.01,
     };
 
-    console.log(initialRegion);
-    console.log(this.state.positions.length);
-
     return (
-      <MapView
-        style={styles.map}
-        initialRegion={initialRegion}
-      >
-        {this.state.positions.map((pos, index) => (
-          <MapView.Marker
-            key={index}
-            title={index.toString()}
-            pinColor={index === this.state.positions.length - 1 ? 'green' : 'blue'}
-            coordinate={{
-              latitude: pos.latitude,
-              longitude: pos.longitude
-            }}
-          />
-        ))}
-      </MapView>
+      <View style={styles.container}>
+        <MapView
+          style={styles.map}
+          initialRegion={initialRegion}
+        >
+          {this.state.positions.map((pos, index) => (
+            <MapView.Marker
+              key={index}
+              title={index.toString()}
+              pinColor={index === this.state.positions.length - 1 ? 'green' : 'blue'}
+              coordinate={{
+                latitude: pos.latitude,
+                longitude: pos.longitude
+              }}
+            />
+          ))}
+        </MapView>
+        <Button
+          onPress={() => console.log('press')}
+          title="Debug"
+          backgroundColor="blue"
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  map: {
-    ...StyleSheet.absoluteFillObject,
+  container: {
+    flex: 1
   },
+  map: {
+    flex: 1
+  },
+  modal: {
+    marginTop: 100,
+    marginLeft: 20
+  },
+  modalText: {
+    padding: 10
+  }
 });

@@ -8,13 +8,13 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
 } from 'react-native';
-import Html5Mapper from './src/Html5Mapper';
 import NativeMapper from './src/NativeMapper';
 
 export default class mapper extends Component {
   render() {
-    // return <Html5Mapper/>;
-    return <NativeMapper/>
+    return (
+      <NativeMapper/>
+    );
   }
 }
 
