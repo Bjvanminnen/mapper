@@ -8,13 +8,11 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
 } from 'react-native';
-import NativeMapper from './src/NativeMapper';
+import App from './src/App';
 
 export default class mapper extends Component {
   render() {
-    return (
-      <NativeMapper/>
-    );
+    return <App/>;
   }
 }
 
