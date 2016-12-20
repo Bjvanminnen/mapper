@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { RNLocation as Location } from 'NativeModules';
 import MapView from 'react-native-maps';
+import DebugScreen from './DebugScreen';
 
 Location.requestAlwaysAuthorization();
 Location.startUpdatingLocation();
@@ -17,6 +18,12 @@ export default class NativeMapper extends Component {
   state = {
     positions: []
   };
+
+  constructor(props) {
+    super(props);
+
+    this.pressDebug = this.pressDebug.bind(this);
+  }
 
   componentDidMount() {
     this.listener = DeviceEventEmitter.addListener('locationUpdated',
@@ -30,6 +37,13 @@ export default class NativeMapper extends Component {
 
   componentWillUnmount() {
     this.listener.remove();
+  }
+
+  pressDebug() {
+    this.props.navigator.push({
+      back: true,
+      item: DebugScreen
+    });
   }
 
   render() {
@@ -63,7 +77,7 @@ export default class NativeMapper extends Component {
           ))}
         </MapView>
         <Button
-          onPress={() => console.log('press')}
+          onPress={this.pressDebug}
           title="Debug"
           backgroundColor="blue"
         />
