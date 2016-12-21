@@ -6,6 +6,9 @@ const styles = {
   navBar: {
     paddingTop: 5,
     paddingBottom: 5
+  },
+  navText: {
+    fontSize: 30
   }
 };
 
@@ -17,7 +20,7 @@ const NavigationBar = ({route, navigator}) => {
   return (
     <View style={styles.navBar}>
       <TouchableHighlight onPress={() => navigator.pop()}>
-        <Text>
+        <Text style={styles.navText}>
           {"< Back"}
         </Text>
       </TouchableHighlight>
@@ -29,13 +32,14 @@ function renderScene(route, navigator) {
   return (
     <View style={{flex: 1}}>
       <NavigationBar route={route} navigator={navigator}/>
-      <route.item navigator={navigator}/>
+      <route.component {...route.props} navigator={navigator}/>
     </View>
   );
 }
 
 const initialRoute = {
-  item: NativeMapper
+  component: NativeMapper,
+  props: {}
 };
 
 export default class App extends Component {

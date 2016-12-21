@@ -23,6 +23,7 @@ export default class NativeMapper extends Component {
     super(props);
 
     this.pressDebug = this.pressDebug.bind(this);
+    this.clearMarkers = this.clearMarkers.bind(this);
   }
 
   componentDidMount() {
@@ -42,7 +43,17 @@ export default class NativeMapper extends Component {
   pressDebug() {
     this.props.navigator.push({
       back: true,
-      item: DebugScreen
+      component: DebugScreen,
+      props: {
+        onClear: this.clearMarkers
+      }
+    });
+  }
+
+  clearMarkers() {
+    console.log('clearing markers');
+    this.setState({
+      positions: [this.state.positions[this.state.positions.length - 1]]
     });
   }
 

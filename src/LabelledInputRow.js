@@ -6,9 +6,9 @@ const styles = {
     height: 26,
     borderWidth: 0.5,
     borderColor: '#0f0f0f',
-    flex: 1,
     fontSize: 13,
     padding: 4,
+    width: 30
   },
   label: {
     width: 115,
@@ -16,10 +16,14 @@ const styles = {
     marginRight: 10,
     paddingTop: 2
   },
+  labelText: {
+    fontSize: 20
+  },
   container: {
     flex: 1,
     flexDirection: 'row',
     marginVertical: 2,
+    marginRight: 5
   }
 };
 
@@ -47,7 +51,9 @@ export default class LabelledNumberInput extends React.Component {
       <ScrollView style={{flex: 1}}>
         <View style={styles.container}>
           <View style={styles.label}>
-            <Text>{label}</Text>
+            <Text style={styles.labelText}>
+              {label}
+            </Text>
           </View>
           <TextInput
             onEndEditing={this.onEndEditing}
