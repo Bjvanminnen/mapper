@@ -35,6 +35,7 @@ export default class DebugScreen extends Component {
         />
         <LabelledInputRow
           label="distance"
+          startVal="5"
           onChange={this.onDistanceChange}
         />
       </View>

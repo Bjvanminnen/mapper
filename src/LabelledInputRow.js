@@ -30,6 +30,7 @@ const styles = {
 export default class LabelledNumberInput extends React.Component {
   static propTypes = {
     label: React.PropTypes.string.isRequired,
+    startVal: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func
   };
 
@@ -57,7 +58,7 @@ export default class LabelledNumberInput extends React.Component {
           </View>
           <TextInput
             onEndEditing={this.onEndEditing}
-            defaultValue="1"
+            defaultValue={this.props.startVal}
             keyboardType="numeric"
             style={styles.input}
           />
