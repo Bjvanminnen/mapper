@@ -15,8 +15,6 @@ export default function distance(state=5, action) {
 export const bindDistanceFilter = () => {
   const store = getStore();
   let lastDistance = store.getState().distance;
-  Location.setDistanceFilter(lastDistance);
-
   store.subscribe(() => {
     if (store.distance !== lastDistance) {
       lastDistance = store.getState().distance;

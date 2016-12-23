@@ -4,10 +4,13 @@ import LabelledInputRow from './LabelledInputRow';
 import { RNLocation as Location } from 'NativeModules';
 import { setDistance } from './redux/distance';
 import getStore from './redux/getStore';
+import { connect } from 'react-redux';
 
-export default class DebugScreen extends Component {
+class DebugScreen extends Component {
   static propTypes = {
-    onClear: React.PropTypes.func.isRequired
+    onClear: React.PropTypes.func.isRequired,
+    // redux
+    setDistance: React.PropTypes.func.isRequired,
   };
 
   state = {
@@ -17,14 +20,14 @@ export default class DebugScreen extends Component {
   constructor(props) {
     super(props);
 
+    this.props.setDistance(this.props.distance);
     this.onDistanceChange = this.onDistanceChange.bind(this);
   }
 
   onDistanceChange(val) {
     const numVal = parseInt(val, 10);
 
-    // TODO - connect
-    getStore().dispatch(setDistance(numVal));
+    this.props.setDistance(numVal);
   }
 
   render() {
@@ -39,10 +42,16 @@ export default class DebugScreen extends Component {
         />
         <LabelledInputRow
           label="distance"
-          startVal="5"
+          startVal={this.props.distance.toString()}
           onChange={this.onDistanceChange}
         />
       </View>
     );
   }
 }
+
+export default connect(state => ({
+  distance: state.distance
+}), dispatch => ({
+  setDistance: val => dispatch(setDistance(val))
+}))(DebugScreen);
