@@ -12,7 +12,6 @@ import DebugScreen from './DebugScreen';
 
 Location.requestAlwaysAuthorization();
 Location.startUpdatingLocation();
-Location.setDistanceFilter(5.0);
 
 export default class NativeMapper extends Component {
   state = {

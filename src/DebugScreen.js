@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import LabelledInputRow from './LabelledInputRow';
 import { RNLocation as Location } from 'NativeModules';
+import { setDistance } from './redux/distance';
+import getStore from './redux/getStore';
 
 export default class DebugScreen extends Component {
   static propTypes = {
@@ -20,7 +22,9 @@ export default class DebugScreen extends Component {
 
   onDistanceChange(val) {
     const numVal = parseInt(val, 10);
-    Location.setDistanceFilter(numVal);
+
+    // TODO - connect
+    getStore().dispatch(setDistance(numVal));
   }
 
   render() {
