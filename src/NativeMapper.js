@@ -9,6 +9,7 @@ import {
 import { RNLocation as Location } from 'NativeModules';
 import MapView from 'react-native-maps';
 import DebugScreen from './DebugScreen';
+import DebugOverlay from './DebugOverlay';
 
 Location.requestAlwaysAuthorization();
 Location.startUpdatingLocation();
@@ -91,6 +92,7 @@ export default class NativeMapper extends Component {
           title="Debug"
           backgroundColor="blue"
         />
+        <DebugOverlay/>
       </View>
     );
   }
