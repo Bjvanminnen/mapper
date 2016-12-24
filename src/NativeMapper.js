@@ -47,8 +47,8 @@ class NativeMapper extends Component {
   static propTypes = {
     positions: React.PropTypes.arrayOf(
       React.PropTypes.shape({
-        lat: React.PropTypes.number.isRequired,
-        long: React.PropTypes.number.isRequired
+        latitude: React.PropTypes.number.isRequired,
+        longitude: React.PropTypes.number.isRequired
       })
     ).isRequired,
     navigator: React.PropTypes.object.isRequired,
@@ -71,11 +71,11 @@ class NativeMapper extends Component {
     this.listener = DeviceEventEmitter.addListener('locationUpdated',
       location => {
         const newLocation = {
-          lat: location.coords.latitude,
-          long: location.coords.longitude
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude
         };
 
-        if (lastLocation && lastLocation.lat === newLocation.lat &&
+        if (lastLocation && lastLocation.latitude=== newLocation.latitude&&
             lastLocation.long === newLocation.long) {
           return
         }
@@ -111,10 +111,10 @@ class NativeMapper extends Component {
     }
 
     const initialRegion = {
-      latitude: positions[0].lat,
-      longitude: positions[0].long,
-      latitudeDelta: 0.01,
-      longitudeDelta: 0.01,
+      latitude: positions[0].latitude,
+      longitude: positions[0].longitude,
+      latitudeDelta: 0.005,
+      longitudeDelta: 0.005,
     };
 
     return (
@@ -128,10 +128,7 @@ class NativeMapper extends Component {
               key={index}
               title={index.toString()}
               pinColor={getColor(positions, index)}
-              coordinate={{
-                latitude: pos.lat,
-                longitude: pos.long
-              }}
+              coordinate={pos}
             />
           ))}
         </MapView>
@@ -149,6 +146,6 @@ class NativeMapper extends Component {
 export default connect(state => ({
   positions: state.positions
 }), dispatch => ({
-  addPosition: ({lat, long}) => dispatch(addPosition({lat, long})),
+  addPosition: ({latitude, longitude}) => dispatch(addPosition({latitude, longitude})),
   clearPositions: () => dispatch(clearPositions())
 }))(NativeMapper);
