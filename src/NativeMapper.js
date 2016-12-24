@@ -10,11 +10,51 @@ import { RNLocation as Location } from 'NativeModules';
 import MapView from 'react-native-maps';
 import DebugScreen from './DebugScreen';
 import DebugOverlay from './DebugOverlay';
+import { connect } from 'react-redux';
+import { addPosition, clearPositions } from './redux/positions';
 
 Location.requestAlwaysAuthorization();
 Location.startUpdatingLocation();
 
-export default class NativeMapper extends Component {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  map: {
+    flex: 1
+  },
+  modal: {
+    marginTop: 100,
+    marginLeft: 20
+  },
+  modalText: {
+    padding: 10
+  }
+});
+
+const getColor = (positions, index) => {
+  const last = positions.length - 1;
+  if (index === 0) {
+    return 'green';
+  }
+  if (index === last) {
+    return 'red';
+  }
+  return 'blue';
+};
+
+class NativeMapper extends Component {
+  static propTypes = {
+    positions: React.PropTypes.arrayOf(
+      React.PropTypes.shape({
+        lat: React.PropTypes.number.isRequired,
+        long: React.PropTypes.number.isRequired
+      })
+    ).isRequired,
+    navigator: React.PropTypes.object.isRequired,
+    addPosition: React.PropTypes.func.isRequired
+  };
+
   state = {
     positions: []
   };
@@ -27,11 +67,20 @@ export default class NativeMapper extends Component {
   }
 
   componentDidMount() {
+    let lastLocation;
     this.listener = DeviceEventEmitter.addListener('locationUpdated',
       location => {
-        this.setState({
-          positions: this.state.positions.concat(location.coords)
-        });
+        const newLocation = {
+          lat: location.coords.latitude,
+          long: location.coords.longitude
+        };
+
+        if (lastLocation && lastLocation.lat === newLocation.lat &&
+            lastLocation.long === newLocation.long) {
+          return
+        }
+        lastLocation = newLocation;
+        this.props.addPosition(newLocation);
       }
     );
   }
@@ -52,19 +101,18 @@ export default class NativeMapper extends Component {
 
   clearMarkers() {
     console.log('clearing markers');
-    this.setState({
-      positions: [this.state.positions[this.state.positions.length - 1]]
-    });
+    this.props.clearPositions();
   }
 
   render() {
-    if (this.state.positions.length === 0) {
+    const { positions } = this.props;
+    if (positions.length === 0) {
       return null;
     }
 
     const initialRegion = {
-      latitude: this.state.positions[0].latitude,
-      longitude: this.state.positions[0].longitude,
+      latitude: positions[0].lat,
+      longitude: positions[0].long,
       latitudeDelta: 0.01,
       longitudeDelta: 0.01,
     };
@@ -75,14 +123,14 @@ export default class NativeMapper extends Component {
           style={styles.map}
           initialRegion={initialRegion}
         >
-          {this.state.positions.map((pos, index) => (
+          {positions.map((pos, index) => (
             <MapView.Marker
               key={index}
               title={index.toString()}
-              pinColor={index === this.state.positions.length - 1 ? 'green' : 'blue'}
+              pinColor={getColor(positions, index)}
               coordinate={{
-                latitude: pos.latitude,
-                longitude: pos.longitude
+                latitude: pos.lat,
+                longitude: pos.long
               }}
             />
           ))}
@@ -98,18 +146,9 @@ export default class NativeMapper extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  map: {
-    flex: 1
-  },
-  modal: {
-    marginTop: 100,
-    marginLeft: 20
-  },
-  modalText: {
-    padding: 10
-  }
-});
+export default connect(state => ({
+  positions: state.positions
+}), dispatch => ({
+  addPosition: ({lat, long}) => dispatch(addPosition({lat, long})),
+  clearPositions: () => dispatch(clearPositions())
+}))(NativeMapper);

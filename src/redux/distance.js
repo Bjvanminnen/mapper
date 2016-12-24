@@ -4,7 +4,7 @@ import { RNLocation as Location } from 'NativeModules';
 const SET_DISTANCE = 'distance/SET_DISTANCE';
 export const setDistance = distance => ({ type: SET_DISTANCE, distance });
 
-export default function distance(state=5, action) {
+export default function distance(state=1, action) {
   if (action.type === SET_DISTANCE) {
     return action.distance;
   }
