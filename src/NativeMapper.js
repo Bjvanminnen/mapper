@@ -11,7 +11,7 @@ import MapView from 'react-native-maps';
 import DebugScreen from './DebugScreen';
 import DebugOverlay from './DebugOverlay';
 import { connect } from 'react-redux';
-import { addPosition, clearPositions } from './redux/positions';
+import { addPosition, clearPositions } from './redux/visitedPositions';
 
 Location.requestAlwaysAuthorization();
 Location.startUpdatingLocation();
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const getColor = (positions, index) => {
-  const last = positions.length - 1;
+const getColor = (visitedPositions, index) => {
+  const last = visitedPositions.length - 1;
   if (index === 0) {
     return 'green';
   }
@@ -45,7 +45,7 @@ const getColor = (positions, index) => {
 
 class NativeMapper extends Component {
   static propTypes = {
-    positions: React.PropTypes.arrayOf(
+    visitedPositions: React.PropTypes.arrayOf(
       React.PropTypes.shape({
         latitude: React.PropTypes.number.isRequired,
         longitude: React.PropTypes.number.isRequired
@@ -56,7 +56,7 @@ class NativeMapper extends Component {
   };
 
   state = {
-    positions: []
+    visitedPositions: []
   };
 
   constructor(props) {
@@ -105,14 +105,14 @@ class NativeMapper extends Component {
   }
 
   render() {
-    const { positions } = this.props;
-    if (positions.length === 0) {
+    const { visitedPositions } = this.props;
+    if (visitedPositions.length === 0) {
       return null;
     }
 
     const initialRegion = {
-      latitude: positions[0].latitude,
-      longitude: positions[0].longitude,
+      latitude: visitedPositions[0].latitude,
+      longitude: visitedPositions[0].longitude,
       latitudeDelta: 0.005,
       longitudeDelta: 0.005,
     };
@@ -123,11 +123,11 @@ class NativeMapper extends Component {
           style={styles.map}
           initialRegion={initialRegion}
         >
-          {positions.map((pos, index) => (
+          {visitedPositions.map((pos, index) => (
             <MapView.Marker
               key={index}
               title={index.toString()}
-              pinColor={getColor(positions, index)}
+              pinColor={getColor(visitedPositions, index)}
               coordinate={pos}
             />
           ))}
@@ -144,7 +144,7 @@ class NativeMapper extends Component {
 }
 
 export default connect(state => ({
-  positions: state.positions
+  visitedPositions: state.visitedPositions
 }), dispatch => ({
   addPosition: ({latitude, longitude}) => dispatch(addPosition({latitude, longitude})),
   clearPositions: () => dispatch(clearPositions())

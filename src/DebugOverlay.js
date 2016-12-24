@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { getLastPosition } from './redux/positions';
+import { getLastPosition } from './redux/visitedPositions';
 import { distanceDiff } from './distanceUtils';
 
 const styles = {
@@ -28,12 +28,12 @@ class DebugOverlay extends Component {
   }
 };
 
-function distanceBetweenFirstAndLast(positions) {
-  const first = positions[0];
-  const last = getLastPosition(positions);
+function distanceBetweenFirstAndLast(visitedPositions) {
+  const first = visitedPositions[0];
+  const last = getLastPosition(visitedPositions);
   return distanceDiff(first, last);
 }
 
 export default connect(state => ({
-  distance: distanceBetweenFirstAndLast(state.positions)
+  distance: distanceBetweenFirstAndLast(state.visitedPositions)
 }))(DebugOverlay);

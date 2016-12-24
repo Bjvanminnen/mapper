@@ -1,10 +1,10 @@
-const ADD_POSITION = 'positions/ADD_POSITION';
+const ADD_POSITION = 'visitedPositions/ADD_POSITION';
 export const addPosition = ({latitude, longitude}) => ({ type: ADD_POSITION, latitude, longitude });
 
-const CLEAR_POSITIONS = 'positions/CLEAR_POSITIONS';
+const CLEAR_POSITIONS = 'visitedPositions/CLEAR_POSITIONS';
 export const clearPositions = () => ({ type: CLEAR_POSITIONS });
 
-export default function positions(state=[], action) {
+export default function visitedPositions(state=[], action) {
   if (action.type === ADD_POSITION) {
     return state.concat({
       latitude: action.latitude,
