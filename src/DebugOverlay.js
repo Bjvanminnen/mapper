@@ -28,12 +28,15 @@ class DebugOverlay extends Component {
   }
 };
 
-function distanceBetweenFirstAndLast(visitedPositions) {
-  const first = visitedPositions[0];
-  const last = getLastPosition(visitedPositions);
-  return distanceDiff(first, last);
+function distanceFromTarget(visitedPositions, targets) {
+  const current = getLastPosition(visitedPositions);
+  const target = targets[0];
+  if (!target) {
+    return 0;
+  }
+  return distanceDiff(current, target);
 }
 
 export default connect(state => ({
-  distance: distanceBetweenFirstAndLast(state.visitedPositions)
+  distance: distanceFromTarget(state.visitedPositions, state.targets)
 }))(DebugOverlay);

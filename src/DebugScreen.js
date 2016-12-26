@@ -24,20 +24,12 @@ class DebugScreen extends Component {
 
     this.props.setDistance(this.props.distance);
     this.onDistanceChange = this.onDistanceChange.bind(this);
-    this.onCreateTarget = this.onCreateTarget.bind(this);
   }
 
   onDistanceChange(val) {
     const numVal = parseInt(val, 10);
 
     this.props.setDistance(numVal);
-  }
-
-  onCreateTarget() {
-    const { visitedPositions, createTarget } = this.props;
-
-    const currentPosition = visitedPositions[visitedPositions.length - 1];
-    createTarget(currentPosition);
   }
 
   render() {
@@ -49,10 +41,6 @@ class DebugScreen extends Component {
         <Button
           onPress={this.props.onClear}
           title="Clear Markers"
-        />
-        <Button
-          onPress={this.onCreateTarget}
-          title="Create Target"
         />
         <LabelledInputRow
           label="distance"

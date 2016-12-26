@@ -84,7 +84,7 @@ class NativeMapper extends Component {
 
     this.pressDebug = this.pressDebug.bind(this);
     this.clearMarkers = this.clearMarkers.bind(this);
-    this.onPressTarget = this.onPressTarget.bind(this);
+    this.createTarget = this.createTarget.bind(this);
   }
 
   componentDidMount() {
@@ -110,6 +110,13 @@ class NativeMapper extends Component {
     this.listener.remove();
   }
 
+  componentDidUpdate() {
+    const { visitedPositions, targets } = this.props;
+    if (visitedPositions.length > 0 && targets.length === 0) {
+      this.createTarget();
+    }
+  }
+
   pressDebug() {
     this.props.navigator.push({
       back: true,
@@ -120,15 +127,13 @@ class NativeMapper extends Component {
     });
   }
 
-  onPressTarget() {
+  createTarget() {
     const { visitedPositions, createTarget } = this.props;
     const len = visitedPositions.length;
-    console.log(visitedPositions[len - 1]);
     createTarget(visitedPositions[len - 1])
   }
 
   clearMarkers() {
-    console.log('clearing markers');
     this.props.clearPositions();
   }
 
@@ -166,7 +171,7 @@ class NativeMapper extends Component {
             <MapView.Marker
               key="target"
               coordinate={this.props.targets[0]}
-              onPress={this.onPressTarget}
+              onPress={this.createTarget}
             >
               <Text style={styles.marker}>T</Text>
             </MapView.Marker>
