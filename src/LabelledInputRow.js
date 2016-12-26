@@ -20,7 +20,6 @@ const styles = {
     fontSize: 20
   },
   container: {
-    flex: 1,
     flexDirection: 'row',
     marginVertical: 2,
     marginRight: 5
@@ -49,7 +48,7 @@ export default class LabelledNumberInput extends React.Component {
   render() {
     const { label } = this.props;
     return (
-      <ScrollView style={{flex: 1}}>
+      <ScrollView>
         <View style={styles.container}>
           <View style={styles.label}>
             <Text style={styles.labelText}>

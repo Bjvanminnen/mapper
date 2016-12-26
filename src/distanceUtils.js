@@ -12,21 +12,6 @@ export const isWithin = (one, two, meters) => {
   return distanceDiff(one, two) <= meters;
 }
 
-// TODO - generate a location n meters away
-export const foo = (n, angle = 0) => {
-  const latLong = {
-    latitude: 37.785834,
-    longitude: -122.406417
-  };
-  const next = destinationPoint(latLong, n, angle);
-  console.log(next);
-  console.log(distanceDiff(latLong, next));
-
-  const store = getStore();
-  store.dispatch(addPosition(next))
-};
-window.foo = foo;
-
 const toRadians = deg => deg * Math.PI / 180;
 const toDegress = rad => rad * 180 / Math.PI;
 
@@ -43,7 +28,7 @@ const toDegress = rad => rad * 180 / Math.PI;
  *     var p1 = new LatLon(51.4778, -0.0015);
  *     var p2 = p1.destinationPoint(7794, 300.7); // 51.5135°N, 000.0983°W
  */
-function destinationPoint(startPoint, distance, bearing) {
+export function destinationPoint(startPoint, distance, bearing) {
   // mean radius of the earth in meters
   const radius = 6371e3;
   const { latitude, longitude } = startPoint;

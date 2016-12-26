@@ -29,7 +29,12 @@ const styles = StyleSheet.create({
   },
   modalText: {
     padding: 10
-  }
+  },
+  marker: {
+    marginLeft: 46,
+    marginTop: 33,
+    fontWeight: 'bold',
+  },
 });
 
 const getColor = (visitedPositions, index) => {
@@ -43,14 +48,15 @@ const getColor = (visitedPositions, index) => {
   return 'blue';
 };
 
+const LatLong = React.PropTypes.shape({
+  latitude: React.PropTypes.number.isRequired,
+  longitude: React.PropTypes.number.isRequired
+});
+
 class NativeMapper extends Component {
   static propTypes = {
-    visitedPositions: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        latitude: React.PropTypes.number.isRequired,
-        longitude: React.PropTypes.number.isRequired
-      })
-    ).isRequired,
+    visitedPositions: React.PropTypes.arrayOf(LatLong).isRequired,
+    targets: React.PropTypes.arrayOf(LatLong),
     navigator: React.PropTypes.object.isRequired,
     addPosition: React.PropTypes.func.isRequired
   };
@@ -113,8 +119,8 @@ class NativeMapper extends Component {
     const initialRegion = {
       latitude: visitedPositions[0].latitude,
       longitude: visitedPositions[0].longitude,
-      latitudeDelta: 0.005,
-      longitudeDelta: 0.005,
+      latitudeDelta: 0.002,
+      longitudeDelta: 0.002,
     };
 
     return (
@@ -127,10 +133,21 @@ class NativeMapper extends Component {
             <MapView.Marker
               key={index}
               title={index.toString()}
-              pinColor={getColor(visitedPositions, index)}
               coordinate={pos}
-            />
+            >
+              <Text style={[...styles.marker, {color: getColor(visitedPositions, index)}]}>
+                {index === 0 ? "S" : "."}
+              </Text>
+            </MapView.Marker>
           ))}
+          {this.props.targets.length > 0 &&
+            <MapView.Marker
+              key="target"
+              coordinate={this.props.targets[0]}
+            >
+              <Text style={styles.marker}>T</Text>
+            </MapView.Marker>
+          }
         </MapView>
         <Button
           onPress={this.pressDebug}
@@ -144,7 +161,8 @@ class NativeMapper extends Component {
 }
 
 export default connect(state => ({
-  visitedPositions: state.visitedPositions
+  visitedPositions: state.visitedPositions,
+  targets: state.targets
 }), dispatch => ({
   addPosition: ({latitude, longitude}) => dispatch(addPosition({latitude, longitude})),
   clearPositions: () => dispatch(clearPositions())
