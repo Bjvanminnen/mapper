@@ -5,7 +5,6 @@ import { RNLocation as Location } from 'NativeModules';
 import { setDistance } from './redux/distance';
 import getStore from './redux/getStore';
 import { connect } from 'react-redux';
-import { destinationPoint } from './distanceUtils';
 import { createTarget } from './redux/targets';
 
 class DebugScreen extends Component {
@@ -38,8 +37,7 @@ class DebugScreen extends Component {
     const { visitedPositions, createTarget } = this.props;
 
     const currentPosition = visitedPositions[visitedPositions.length - 1];
-    const target = destinationPoint(currentPosition, 100, 0);
-    createTarget(target);
+    createTarget(currentPosition);
   }
 
   render() {
@@ -71,5 +69,5 @@ export default connect(state => ({
   visitedPositions: state.visitedPositions
 }), dispatch => ({
   setDistance: val => dispatch(setDistance(val)),
-  createTarget: position => dispatch(createTarget(position))
+  createTarget: currentPosition => dispatch(createTarget(currentPosition))
 }))(DebugScreen);

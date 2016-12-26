@@ -12,6 +12,7 @@ import DebugScreen from './DebugScreen';
 import DebugOverlay from './DebugOverlay';
 import { connect } from 'react-redux';
 import { addPosition, clearPositions } from './redux/visitedPositions';
+import { createTarget } from './redux/targets';
 
 Location.requestAlwaysAuthorization();
 Location.startUpdatingLocation();
@@ -48,17 +49,30 @@ const getColor = (visitedPositions, index) => {
   return 'blue';
 };
 
+const getText = (visitedPositions, index) => {
+  const last = visitedPositions.length - 1;
+  if (index === 0) {
+    return 'S';
+  }
+  if (index === last) {
+    return 'o';
+  }
+  return '.';
+};
+
 const LatLong = React.PropTypes.shape({
   latitude: React.PropTypes.number.isRequired,
   longitude: React.PropTypes.number.isRequired
 });
 
+// TODO - would be nice to add linting that lets me know about undocumented prop types
 class NativeMapper extends Component {
   static propTypes = {
     visitedPositions: React.PropTypes.arrayOf(LatLong).isRequired,
     targets: React.PropTypes.arrayOf(LatLong),
     navigator: React.PropTypes.object.isRequired,
-    addPosition: React.PropTypes.func.isRequired
+    addPosition: React.PropTypes.func.isRequired,
+    createTarget: React.PropTypes.func.isRequired
   };
 
   state = {
@@ -70,6 +84,7 @@ class NativeMapper extends Component {
 
     this.pressDebug = this.pressDebug.bind(this);
     this.clearMarkers = this.clearMarkers.bind(this);
+    this.onPressTarget = this.onPressTarget.bind(this);
   }
 
   componentDidMount() {
@@ -105,6 +120,13 @@ class NativeMapper extends Component {
     });
   }
 
+  onPressTarget() {
+    const { visitedPositions, createTarget } = this.props;
+    const len = visitedPositions.length;
+    console.log(visitedPositions[len - 1]);
+    createTarget(visitedPositions[len - 1])
+  }
+
   clearMarkers() {
     console.log('clearing markers');
     this.props.clearPositions();
@@ -136,7 +158,7 @@ class NativeMapper extends Component {
               coordinate={pos}
             >
               <Text style={[...styles.marker, {color: getColor(visitedPositions, index)}]}>
-                {index === 0 ? "S" : "."}
+                {getText(visitedPositions, index)}
               </Text>
             </MapView.Marker>
           ))}
@@ -144,6 +166,7 @@ class NativeMapper extends Component {
             <MapView.Marker
               key="target"
               coordinate={this.props.targets[0]}
+              onPress={this.onPressTarget}
             >
               <Text style={styles.marker}>T</Text>
             </MapView.Marker>
@@ -165,5 +188,6 @@ export default connect(state => ({
   targets: state.targets
 }), dispatch => ({
   addPosition: ({latitude, longitude}) => dispatch(addPosition({latitude, longitude})),
-  clearPositions: () => dispatch(clearPositions())
+  clearPositions: () => dispatch(clearPositions()),
+  createTarget: currentPos => dispatch(createTarget(currentPos))
 }))(NativeMapper);
