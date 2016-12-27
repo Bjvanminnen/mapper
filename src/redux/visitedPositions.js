@@ -14,13 +14,13 @@ export default function visitedPositions(state=[], action) {
 
   // TODO - write some simple tests
   if (action.type === CLEAR_POSITIONS) {
-    return [getLastPosition(state)];
+    return [getCurrentPosition(state)];
   }
 
   return state;
 }
 
 // Helpers
-export function getLastPosition(state) {
+export function getCurrentPosition(state) {
   return state[state.length - 1];
 }

@@ -13,6 +13,7 @@ import DebugOverlay from './DebugOverlay';
 import { connect } from 'react-redux';
 import { addPosition, clearPositions } from './redux/visitedPositions';
 import { createTarget } from './redux/targets';
+import Target from './Target';
 
 Location.requestAlwaysAuthorization();
 Location.startUpdatingLocation();
@@ -167,15 +168,7 @@ class NativeMapper extends Component {
               </Text>
             </MapView.Marker>
           ))}
-          {this.props.targets.length > 0 &&
-            <MapView.Marker
-              key="target"
-              coordinate={this.props.targets[0]}
-              onPress={this.createTarget}
-            >
-              <Text style={styles.marker}>T</Text>
-            </MapView.Marker>
-          }
+          <Target/>
         </MapView>
         <Button
           onPress={this.pressDebug}
