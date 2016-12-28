@@ -6,7 +6,6 @@ import {
   Text,
   Button
 } from 'react-native';
-import { RNLocation as Location } from 'NativeModules';
 import MapView from 'react-native-maps';
 import DebugScreen from './DebugScreen';
 import DebugOverlay from './DebugOverlay';
@@ -14,9 +13,7 @@ import { connect } from 'react-redux';
 import { addPosition, clearPositions } from './redux/visitedPositions';
 import { createTarget } from './redux/targets';
 import Target from './Target';
-
-Location.requestAlwaysAuthorization();
-Location.startUpdatingLocation();
+import Location from 'react-native-location';
 
 const styles = StyleSheet.create({
   container: {
@@ -86,6 +83,11 @@ class NativeMapper extends Component {
     this.pressDebug = this.pressDebug.bind(this);
     this.clearMarkers = this.clearMarkers.bind(this);
     this.createTarget = this.createTarget.bind(this);
+  }
+
+  componentWillMount() {
+    Location.requestAlwaysAuthorization();
+    Location.startUpdatingLocation();
   }
 
   componentDidMount() {
