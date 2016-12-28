@@ -6,6 +6,11 @@ import getStore from './redux/getStore';
 import { Provider } from 'react-redux';
 import { bindDistanceFilter } from './redux/distance';
 
+// Things TODO
+// Look at speed (behave differently if we think you're driving, etc)
+// Map follows player indicator?
+// Write tests
+
 const initialRoute = {
   component: NativeMapper,
   props: {}
