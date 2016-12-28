@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import LabelledInputRow from './LabelledInputRow';
-import { RNLocation as Location } from 'NativeModules';
+import Location from 'react-native-location';
 import { setDistance } from './redux/distance';
 import getStore from './redux/getStore';
 import { connect } from 'react-redux';
 import { createTarget } from './redux/targets';
+import { getCurrentPosition } from './redux/visitedPositions';
 
 class DebugScreen extends Component {
   static propTypes = {
     onClear: React.PropTypes.func.isRequired,
+    currentPosition: React.PropTypes.object.isRequired,
     visitedPositions: React.PropTypes.array.isRequired,
     // redux
     setDistance: React.PropTypes.func.isRequired,
@@ -24,12 +26,18 @@ class DebugScreen extends Component {
 
     this.props.setDistance(this.props.distance);
     this.onDistanceChange = this.onDistanceChange.bind(this);
+    this.newTarget = this.newTarget.bind(this);
   }
 
   onDistanceChange(val) {
     const numVal = parseInt(val, 10);
 
     this.props.setDistance(numVal);
+  }
+
+  newTarget() {
+    const { currentPosition } = this.props;
+    this.props.createTarget(currentPosition);
   }
 
   render() {
@@ -41,6 +49,10 @@ class DebugScreen extends Component {
         <Button
           onPress={this.props.onClear}
           title="Clear Markers"
+        />
+        <Button
+          onPress={this.newTarget}
+          title="New Target"
         />
         <LabelledInputRow
           label="distance"
@@ -54,6 +66,7 @@ class DebugScreen extends Component {
 
 export default connect(state => ({
   distance: state.distance,
+  currentPosition: getCurrentPosition(state.visitedPositions),
   visitedPositions: state.visitedPositions
 }), dispatch => ({
   setDistance: val => dispatch(setDistance(val)),
