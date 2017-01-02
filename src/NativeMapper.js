@@ -52,9 +52,6 @@ const getText = (visitedPositions, index) => {
   if (index === 0) {
     return 'S';
   }
-  if (index === last) {
-    return 'o';
-  }
   return '.';
 };
 
