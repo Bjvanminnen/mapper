@@ -6,6 +6,7 @@ import { setDistance } from './redux/distance';
 import getStore from './redux/getStore';
 import { connect } from 'react-redux';
 import { createTarget } from './redux/targets';
+import { clearPositions } from './redux/visitedPositions';
 
 class DebugScreen extends Component {
   static propTypes = {
@@ -69,5 +70,6 @@ export default connect(state => ({
   oldPositions: state.visitedPositions.historical
 }), dispatch => ({
   setDistance: val => dispatch(setDistance(val)),
+  onClear: () => dispatch(clearPositions()),
   createTarget: currentPosition => dispatch(createTarget(currentPosition))
 }))(DebugScreen);

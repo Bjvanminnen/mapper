@@ -10,7 +10,7 @@ import MapView from 'react-native-maps';
 import DebugScreen from './DebugScreen';
 import DebugOverlay from './DebugOverlay';
 import { connect } from 'react-redux';
-import { setCurrentPosition, clearPositions } from './redux/visitedPositions';
+import { setCurrentPosition } from './redux/visitedPositions';
 import { createTarget } from './redux/targets';
 import Target from './Target';
 import Location from 'react-native-location';
@@ -62,7 +62,6 @@ class NativeMapper extends Component {
     super(props);
 
     this.pressDebug = this.pressDebug.bind(this);
-    this.clearMarkers = this.clearMarkers.bind(this);
   }
 
   componentWillMount() {
@@ -104,15 +103,7 @@ class NativeMapper extends Component {
     this.props.navigator.push({
       back: true,
       component: DebugScreen,
-      props: {
-        // TODO - this should live in debug screen?
-        onClear: this.clearMarkers
-      }
     });
-  }
-
-  clearMarkers() {
-    this.props.clearPositions();
   }
 
   render() {
@@ -172,6 +163,5 @@ export default connect(state => ({
   targets: state.targets
 }), dispatch => ({
   setCurrentPosition: ({latitude, longitude}) => dispatch(setCurrentPosition({latitude, longitude})),
-  clearPositions: () => dispatch(clearPositions()),
   createTarget: currentPos => dispatch(createTarget(currentPos))
 }))(NativeMapper);
