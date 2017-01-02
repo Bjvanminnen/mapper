@@ -27,7 +27,7 @@ const styles = {
   },
 };
 
-class Target extends Component {
+class TargetMarker extends Component {
   constructor(props) {
     super(props);
 
@@ -70,4 +70,4 @@ export default connect(state => ({
   target: state.targets[0]
 }), dispatch => ({
   createTarget: currentPos => dispatch(createTarget(currentPos))
-}))(Target);
+}))(TargetMarker);

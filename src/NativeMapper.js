@@ -12,7 +12,8 @@ import DebugOverlay from './DebugOverlay';
 import { connect } from 'react-redux';
 import { setCurrentPosition } from './redux/visitedPositions';
 import { createTarget } from './redux/targets';
-import Target from './Target';
+import TargetMarker from './TargetMarker';
+import CurrentMarker from './CurrentMarker';
 import Location from 'react-native-location';
 
 const styles = StyleSheet.create({
@@ -30,9 +31,6 @@ const styles = StyleSheet.create({
     padding: 10
   },
   marker: {
-    // TODO - why these margins?
-    // marginLeft: 46,
-    // marginTop: 33,
     fontWeight: 'bold',
   },
   oldMarker: {
@@ -137,15 +135,8 @@ class NativeMapper extends Component {
               </Text>
             </MapView.Marker>
           ))}
-          <MapView.Marker
-            key="current"
-            coordinate={currentPosition}
-          >
-            <Text style={[styles.marker, styles.currentMarker]}>
-              O
-            </Text>
-          </MapView.Marker>
-          <Target/>
+          <CurrentMarker pos={currentPosition}/>
+          <TargetMarker/>
         </MapView>
         <Button
           onPress={this.pressDebug}
