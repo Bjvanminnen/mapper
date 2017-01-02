@@ -30,8 +30,9 @@ const styles = StyleSheet.create({
     padding: 10
   },
   marker: {
-    marginLeft: 46,
-    marginTop: 33,
+    // TODO - why these margins?
+    // marginLeft: 46,
+    // marginTop: 33,
     fontWeight: 'bold',
   },
   oldMarker: {

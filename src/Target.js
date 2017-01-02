@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { createTarget } from './redux/targets';
 import MapView from 'react-native-maps';
@@ -7,14 +7,24 @@ import { isWithin } from './distanceUtils';
 
 const styles = {
   marker: {
-    marginLeft: 46,
-    marginTop: 33,
     fontWeight: 'bold',
-    color: 'black'
+    padding: 3,
+    color: 'white',
+    textAlign: 'center',
+  },
+  markerBackground: {
+    borderWidth: 1,
+    borderColor: '#570807',
+    borderRadius: 15,
+    backgroundColor: '#ba141188',
+    overflow: 'hidden',
+    width: 25,
+    height: 25,
   },
   markerInRange: {
-    color: 'green'
-  }
+    borderColor: '#084d05',
+    backgroundColor: '#0a780688'
+  },
 };
 
 class Target extends Component {
@@ -45,9 +55,11 @@ class Target extends Component {
         coordinate={this.props.target}
         onPress={this.onPress}
       >
-        <Text style={[styles.marker, isClose && styles.markerInRange]}>
-          T
-        </Text>
+        <View style={[styles.markerBackground, isClose && styles.markerInRange]}>
+          <Text style={[styles.marker]}>
+            T
+          </Text>
+        </View>
       </MapView.Marker>
     );
   }
