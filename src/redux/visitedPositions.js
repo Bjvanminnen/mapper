@@ -1,26 +1,35 @@
-const ADD_POSITION = 'visitedPositions/ADD_POSITION';
-export const addPosition = ({latitude, longitude}) => ({ type: ADD_POSITION, latitude, longitude });
+// TODO - rename from visitedPositions?
+const SET_CURRENT_POSITION = 'visitedPositions/SET_CURRENT_POSITION';
+export const setCurrentPosition = ({latitude, longitude}) => ({ type: SET_CURRENT_POSITION, latitude, longitude });
 
 const CLEAR_POSITIONS = 'visitedPositions/CLEAR_POSITIONS';
 export const clearPositions = () => ({ type: CLEAR_POSITIONS });
 
-export default function visitedPositions(state=[], action) {
-  if (action.type === ADD_POSITION) {
-    return state.concat({
-      latitude: action.latitude,
-      longitude: action.longitude
-    });
+const initialState = {
+  current: null,
+  historical: []
+};
+
+export default function visitedPositions(state=initialState, action) {
+  if (action.type === SET_CURRENT_POSITION) {
+    const { latitude, longitude } = action;
+    let historical = state.historical;
+    if (state.current) {
+      historical = historical.concat(state.current);
+    }
+    return {
+      current: { latitude, longitude },
+      historical
+    };
   }
 
   // TODO - write some simple tests
   if (action.type === CLEAR_POSITIONS) {
-    return [getCurrentPosition(state)];
+    return {
+      ...state,
+      historical: []
+    };
   }
 
   return state;
-}
-
-// Helpers
-export function getCurrentPosition(state) {
-  return state[state.length - 1];
 }

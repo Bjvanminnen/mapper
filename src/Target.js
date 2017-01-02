@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
 import { createTarget } from './redux/targets';
-import { getCurrentPosition } from './redux/visitedPositions';
 import MapView from 'react-native-maps';
 import { isWithin } from './distanceUtils';
 
@@ -55,7 +54,7 @@ class Target extends Component {
 }
 
 export default connect(state => ({
-  currentPosition: getCurrentPosition(state.visitedPositions),
+  currentPosition: state.visitedPositions.current,
   target: state.targets[0]
 }), dispatch => ({
   createTarget: currentPos => dispatch(createTarget(currentPos))

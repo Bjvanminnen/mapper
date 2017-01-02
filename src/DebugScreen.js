@@ -6,13 +6,12 @@ import { setDistance } from './redux/distance';
 import getStore from './redux/getStore';
 import { connect } from 'react-redux';
 import { createTarget } from './redux/targets';
-import { getCurrentPosition } from './redux/visitedPositions';
 
 class DebugScreen extends Component {
   static propTypes = {
     onClear: React.PropTypes.func.isRequired,
     currentPosition: React.PropTypes.object.isRequired,
-    visitedPositions: React.PropTypes.array.isRequired,
+    oldPositions: React.PropTypes.array.isRequired,
     // redux
     setDistance: React.PropTypes.func.isRequired,
   };
@@ -66,8 +65,8 @@ class DebugScreen extends Component {
 
 export default connect(state => ({
   distance: state.distance,
-  currentPosition: getCurrentPosition(state.visitedPositions),
-  visitedPositions: state.visitedPositions
+  currentPosition: state.visitedPositions.current,
+  oldPositions: state.visitedPositions.historical
 }), dispatch => ({
   setDistance: val => dispatch(setDistance(val)),
   createTarget: currentPosition => dispatch(createTarget(currentPosition))

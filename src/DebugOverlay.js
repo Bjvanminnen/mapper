@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { getCurrentPosition } from './redux/visitedPositions';
 import { distanceDiff } from './distanceUtils';
 
 const styles = {
@@ -28,15 +27,14 @@ class DebugOverlay extends Component {
   }
 };
 
-function distanceFromTarget(visitedPositions, targets) {
-  const current = getCurrentPosition(visitedPositions);
+function distanceFromTarget(currentPos, targets) {
   const target = targets[0];
   if (!target) {
     return 0;
   }
-  return distanceDiff(current, target);
+  return distanceDiff(currentPos, target);
 }
 
 export default connect(state => ({
-  distance: distanceFromTarget(state.visitedPositions, state.targets)
+  distance: distanceFromTarget(state.visitedPositions.current, state.targets)
 }))(DebugOverlay);
