@@ -3,23 +3,27 @@ import { Text } from 'react-native';
 import MapView from 'react-native-maps';
 
 const styles = {
-  marker: {
+  main: {
     fontWeight: 'bold',
-  },
-  currentMarker: {
-    color: 'green'
+    color: 'green',
+    fontSize: 20
   }
 };
 
 class CurrentMarker extends Component {
   render() {
+    const rotation = {
+      transform: [
+        { rotate: (this.props.heading - 90) + 'deg' }
+      ]
+    };
     return (
       <MapView.Marker
         key="current"
         coordinate={this.props.pos}
       >
-        <Text style={[styles.marker, styles.currentMarker]}>
-          O
+        <Text style={[styles.main, rotation]}>
+          >
         </Text>
       </MapView.Marker>
     );

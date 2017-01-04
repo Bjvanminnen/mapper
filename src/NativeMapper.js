@@ -49,7 +49,8 @@ const LatLong = React.PropTypes.shape({
 // TODO - would be nice to add linting that lets me know about undocumented prop types
 class NativeMapper extends Component {
   static propTypes = {
-    current: LatLong,
+    currentPosition: LatLong,
+    currentHeading: React.PropTypes.number,
     oldPositions: React.PropTypes.arrayOf(LatLong).isRequired,
     targets: React.PropTypes.arrayOf(LatLong),
     navigator: React.PropTypes.object.isRequired,
@@ -72,6 +73,7 @@ class NativeMapper extends Component {
     let lastLocation;
     this.listener = DeviceEventEmitter.addListener('locationUpdated',
       location => {
+        console.log(location.coords);
         const newLocation = {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude
@@ -82,7 +84,7 @@ class NativeMapper extends Component {
           return
         }
         lastLocation = newLocation;
-        this.props.setCurrentPosition(newLocation);
+        this.props.setCurrentPosition(newLocation, location.coords.course);
       }
     );
   }
@@ -106,7 +108,7 @@ class NativeMapper extends Component {
   }
 
   render() {
-    const { currentPosition, oldPositions } = this.props;
+    const { currentPosition, currentHeading, oldPositions } = this.props;
     if (!currentPosition) {
       return null;
     }
@@ -135,7 +137,10 @@ class NativeMapper extends Component {
               </Text>
             </MapView.Marker>
           ))}
-          <CurrentMarker pos={currentPosition}/>
+          <CurrentMarker
+            pos={currentPosition}
+            heading={currentHeading}
+          />
           <TargetMarker/>
         </MapView>
         <Button
@@ -151,9 +156,10 @@ class NativeMapper extends Component {
 
 export default connect(state => ({
   currentPosition: state.visitedPositions.current,
+  currentHeading: state.visitedPositions.heading,
   oldPositions: state.visitedPositions.historical,
   targets: state.targets
 }), dispatch => ({
-  setCurrentPosition: ({latitude, longitude}) => dispatch(setCurrentPosition({latitude, longitude})),
+  setCurrentPosition: ({latitude, longitude}, course) => dispatch(setCurrentPosition({latitude, longitude}, course)),
   createTarget: currentPos => dispatch(createTarget(currentPos))
 }))(NativeMapper);

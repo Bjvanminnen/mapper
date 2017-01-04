@@ -22,6 +22,7 @@ class DebugOverlay extends Component {
     return (
       <View style={styles.main}>
         <Text>{this.props.distance}</Text>
+        <Text>{this.props.currentHeading}</Text>
       </View>
     );
   }
@@ -36,5 +37,6 @@ function distanceFromTarget(currentPos, targets) {
 }
 
 export default connect(state => ({
-  distance: distanceFromTarget(state.visitedPositions.current, state.targets)
+  distance: distanceFromTarget(state.visitedPositions.current, state.targets),
+  currentHeading: state.visitedPositions.heading,
 }))(DebugOverlay);
