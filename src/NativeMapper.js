@@ -73,7 +73,6 @@ class NativeMapper extends Component {
     let lastLocation;
     this.listener = DeviceEventEmitter.addListener('locationUpdated',
       location => {
-        console.log(location.coords);
         const newLocation = {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude

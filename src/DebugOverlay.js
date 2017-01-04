@@ -1,26 +1,78 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, PanResponder } from 'react-native';
 import { connect } from 'react-redux';
 import { distanceDiff } from './distanceUtils';
 
 const styles = {
   main: {
     position: 'absolute',
-    left: 5,
-    top: 5,
     borderWidth: 1,
     borderColor: 'black'
+  },
+  expanded: {
+    width: 200,
+    height: 200
   }
-
 };
 
 class DebugOverlay extends Component {
   static propTypes = {
     distance: React.PropTypes.number.isRequired
   };
+
+  state = {
+    left: 5,
+    top: 20,
+    expanded: false
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.panResponder = this.configurePanning();
+  }
+
+  configurePanning() {
+    let start = { x: 0, y: 0, time: 0 };
+    return PanResponder.create({
+      onStartShouldSetPanResponder: (e, gestureState) => {
+        const now = new Date();
+        if (now - start.time < 300) {
+          this.setState({expanded: !this.state.expanded});
+          return false;
+        }
+
+        start.x = this.state.left;
+        start.y = this.state.top;
+        start.time = now;
+        return true;
+      },
+      onPanResponderMove: (e, gestureState) => {
+        // console.log('onPanResponderMove', gestureState.moveX, gestureState.moveY);
+        this.setState({
+          left: start.x + gestureState.dx,
+          top: start.y + gestureState.dy
+        });
+      }
+    });
+  }
+
   render() {
+    const style = [
+      styles.main,
+      {
+        left: this.state.left,
+        top: this.state.top,
+      },
+      this.state.expanded && styles.expanded
+    ];
+
     return (
-      <View style={styles.main}>
+      <View
+        style={style}
+        {...this.panResponder.panHandlers}
+        onClick={() => console.log('click')}
+      >
         <Text>{this.props.distance}</Text>
         <Text>{this.props.currentHeading}</Text>
       </View>
