@@ -10,7 +10,7 @@ import MapView from 'react-native-maps';
 import DebugScreen from './DebugScreen';
 import DebugOverlay from './DebugOverlay';
 import { connect } from 'react-redux';
-import { setCurrentPosition } from './redux/visitedPositions';
+import { setCurrentPosition } from './redux/positions';
 import { createTarget } from './redux/targets';
 import TargetMarker from './TargetMarker';
 import CurrentMarker from './CurrentMarker';
@@ -155,9 +155,9 @@ class NativeMapper extends Component {
 }
 
 export default connect(state => ({
-  currentPosition: state.visitedPositions.current,
-  currentHeading: state.visitedPositions.heading,
-  oldPositions: state.visitedPositions.historical,
+  currentPosition: state.positions.current,
+  currentHeading: state.positions.heading,
+  oldPositions: state.positions.historical,
   targets: state.targets
 }), dispatch => ({
   setCurrentPosition: ({latitude, longitude}, course) => dispatch(setCurrentPosition({latitude, longitude}, course)),

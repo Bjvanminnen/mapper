@@ -1,7 +1,7 @@
 import haversine from 'haversine';
 
 import getStore from './redux/getStore';
-import { addPosition } from './redux/visitedPositions';
+import { addPosition } from './redux/positions';
 
 export const distanceDiff = (one, two) => {
   // TODO - should i use LatLong.distanceTo method instead of separate lib?

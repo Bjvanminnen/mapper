@@ -66,7 +66,7 @@ class TargetMarker extends Component {
 }
 
 export default connect(state => ({
-  currentPosition: state.visitedPositions.current,
+  currentPosition: state.positions.current,
   target: state.targets[0]
 }), dispatch => ({
   createTarget: currentPos => dispatch(createTarget(currentPos))

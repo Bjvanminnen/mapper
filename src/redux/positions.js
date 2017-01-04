@@ -1,5 +1,4 @@
-// TODO - rename from visitedPositions?
-const SET_CURRENT_POSITION = 'visitedPositions/SET_CURRENT_POSITION';
+const SET_CURRENT_POSITION = 'positions/SET_CURRENT_POSITION';
 export const setCurrentPosition = ({latitude, longitude}, course) => ({
   type: SET_CURRENT_POSITION,
   latitude,
@@ -7,7 +6,7 @@ export const setCurrentPosition = ({latitude, longitude}, course) => ({
   course
 });
 
-const CLEAR_POSITIONS = 'visitedPositions/CLEAR_POSITIONS';
+const CLEAR_POSITIONS = 'positions/CLEAR_POSITIONS';
 export const clearPositions = () => ({ type: CLEAR_POSITIONS });
 
 const initialState = {
@@ -16,7 +15,7 @@ const initialState = {
   historical: []
 };
 
-export default function visitedPositions(state=initialState, action) {
+export default function positions(state=initialState, action) {
   if (action.type === SET_CURRENT_POSITION) {
     const { latitude, longitude, course } = action;
     let historical = state.historical;

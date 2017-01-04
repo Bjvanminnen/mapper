@@ -37,6 +37,6 @@ function distanceFromTarget(currentPos, targets) {
 }
 
 export default connect(state => ({
-  distance: distanceFromTarget(state.visitedPositions.current, state.targets),
-  currentHeading: state.visitedPositions.heading,
+  distance: distanceFromTarget(state.positions.current, state.targets),
+  currentHeading: state.positions.heading,
 }))(DebugOverlay);

@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
 
 import distance from './distance';
-import visitedPositions from './visitedPositions';
+import positions from './positions';
 import targets from './targets';
 
 let store = null;
@@ -13,7 +13,7 @@ export default function getStore() {
     });
     store = createStore(combineReducers({
       distance,
-      visitedPositions,
+      positions,
       targets
     }), applyMiddleware(logger));
   }
