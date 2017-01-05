@@ -9,6 +9,7 @@ import {
 import NativeMapper from './NativeMapper';
 import DebugOverlay from './DebugOverlay';
 import DebugScreen from './DebugScreen';
+import LocationUpdater from './LocationUpdater';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,6 +38,7 @@ class MapScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <LocationUpdater/>
         <NativeMapper/>
         <Button
           onPress={this.pressDebug}

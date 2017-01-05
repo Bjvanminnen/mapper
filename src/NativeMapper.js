@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  DeviceEventEmitter,
   StyleSheet,
   View,
   Text,
@@ -8,11 +7,9 @@ import {
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
-import { setCurrentPosition } from './redux/positions';
 import { createTarget } from './redux/targets';
 import TargetMarker from './TargetMarker';
 import CurrentMarker from './CurrentMarker';
-import Location from 'react-native-location';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,7 +48,6 @@ class NativeMapper extends Component {
     currentHeading: React.PropTypes.number,
     oldPositions: React.PropTypes.arrayOf(LatLong).isRequired,
     targets: React.PropTypes.arrayOf(LatLong),
-    setCurrentPosition: React.PropTypes.func.isRequired,
     createTarget: React.PropTypes.func.isRequired
   };
 
@@ -60,34 +56,6 @@ class NativeMapper extends Component {
 
     this.onRegionChange = this.onRegionChange.bind(this);
     this.onRegionChangeComplete = this.onRegionChangeComplete.bind(this);
-  }
-
-  componentWillMount() {
-    Location.requestAlwaysAuthorization();
-    Location.startUpdatingLocation();
-  }
-
-  componentDidMount() {
-    let lastLocation;
-    this.listener = DeviceEventEmitter.addListener('locationUpdated',
-      location => {
-        const newLocation = {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude
-        };
-
-        if (lastLocation && lastLocation.latitude=== newLocation.latitude&&
-            lastLocation.long === newLocation.long) {
-          return
-        }
-        lastLocation = newLocation;
-        this.props.setCurrentPosition(newLocation, location.coords.course);
-      }
-    );
-  }
-
-  componentWillUnmount() {
-    this.listener.remove();
   }
 
   componentDidUpdate() {
@@ -157,6 +125,5 @@ export default connect(state => ({
   oldPositions: state.positions.historical,
   targets: state.targets
 }), dispatch => ({
-  setCurrentPosition: ({latitude, longitude}, course) => dispatch(setCurrentPosition({latitude, longitude}, course)),
   createTarget: currentPos => dispatch(createTarget(currentPos))
 }))(NativeMapper);
