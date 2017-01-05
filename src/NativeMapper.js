@@ -124,6 +124,11 @@ class NativeMapper extends Component {
         <MapView
           style={styles.map}
           initialRegion={initialRegion}
+          showsPointsOfInterest={false}
+          showsBuildings={false}
+          showsTraffic={false}
+          showsIndoors={false}
+          pitchEnabled={false}
         >
           {oldPositions.map((pos, index) => (
             <MapView.Marker
