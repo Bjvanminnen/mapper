@@ -12,18 +12,8 @@ import TargetMarker from './TargetMarker';
 import CurrentMarker from './CurrentMarker';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
   map: {
     flex: 1
-  },
-  modal: {
-    marginTop: 100,
-    marginLeft: 20
-  },
-  modalText: {
-    padding: 10
   },
   marker: {
     fontWeight: 'bold',
