@@ -7,8 +7,6 @@ import {
   Button
 } from 'react-native';
 import MapView from 'react-native-maps';
-import DebugScreen from './DebugScreen';
-import DebugOverlay from './DebugOverlay';
 import { connect } from 'react-redux';
 import { setCurrentPosition } from './redux/positions';
 import { createTarget } from './redux/targets';
@@ -53,7 +51,6 @@ class NativeMapper extends Component {
     currentHeading: React.PropTypes.number,
     oldPositions: React.PropTypes.arrayOf(LatLong).isRequired,
     targets: React.PropTypes.arrayOf(LatLong),
-    navigator: React.PropTypes.object.isRequired,
     setCurrentPosition: React.PropTypes.func.isRequired,
     createTarget: React.PropTypes.func.isRequired
   };
@@ -61,7 +58,8 @@ class NativeMapper extends Component {
   constructor(props) {
     super(props);
 
-    this.pressDebug = this.pressDebug.bind(this);
+    this.onRegionChange = this.onRegionChange.bind(this);
+    this.onRegionChangeComplete = this.onRegionChangeComplete.bind(this);
   }
 
   componentWillMount() {
@@ -99,11 +97,12 @@ class NativeMapper extends Component {
     }
   }
 
-  pressDebug() {
-    this.props.navigator.push({
-      back: true,
-      component: DebugScreen,
-    });
+  onRegionChange(newLoc) {
+    console.log('onRegionChange ', newLoc);
+  }
+
+  onRegionChangeComplete(newLoc) {
+    console.log('onRegionChangeComplete ', newLoc);
   }
 
   render() {
@@ -120,40 +119,34 @@ class NativeMapper extends Component {
     };
 
     return (
-      <View style={styles.container}>
-        <MapView
-          style={styles.map}
-          initialRegion={initialRegion}
-          showsPointsOfInterest={false}
-          showsBuildings={false}
-          showsTraffic={false}
-          showsIndoors={false}
-          pitchEnabled={false}
-        >
-          {oldPositions.map((pos, index) => (
-            <MapView.Marker
-              key={index}
-              title={index.toString()}
-              coordinate={pos}
-            >
-              <Text style={[styles.marker, styles.oldMarker]}>
-                .
-              </Text>
-            </MapView.Marker>
-          ))}
-          <CurrentMarker
-            pos={currentPosition}
-            heading={currentHeading}
-          />
-          <TargetMarker/>
-        </MapView>
-        <Button
-          onPress={this.pressDebug}
-          title="Debug"
-          backgroundColor="blue"
+      <MapView
+        style={styles.map}
+        initialRegion={initialRegion}
+        showsPointsOfInterest={false}
+        showsBuildings={false}
+        showsTraffic={false}
+        showsIndoors={false}
+        pitchEnabled={false}
+        onRegionChange={this.onRegionChange}
+        onRegionChangeComplete={this.onRegionChangeComplete}
+      >
+        {oldPositions.map((pos, index) => (
+          <MapView.Marker
+            key={index}
+            title={index.toString()}
+            coordinate={pos}
+          >
+            <Text style={[styles.marker, styles.oldMarker]}>
+              .
+            </Text>
+          </MapView.Marker>
+        ))}
+        <CurrentMarker
+          pos={currentPosition}
+          heading={currentHeading}
         />
-        <DebugOverlay/>
-      </View>
+        <TargetMarker/>
+      </MapView>
     );
   }
 }

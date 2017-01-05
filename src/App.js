@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navigator } from 'react-native';
-import NativeMapper from './NativeMapper';
+import MapScreen from './MapScreen';
 import { NavigatorBar, renderScene } from './navigator';
 import getStore from './redux/getStore';
 import { Provider } from 'react-redux';
@@ -12,7 +12,7 @@ import { bindDistanceFilter } from './redux/distance';
 // Write tests
 
 const initialRoute = {
-  component: NativeMapper,
+  component: MapScreen,
   props: {}
 };
 
