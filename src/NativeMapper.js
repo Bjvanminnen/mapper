@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { createTarget } from './redux/targets';
 import TargetMarker from './TargetMarker';
 import CurrentMarker from './CurrentMarker';
+import createGrid from './createGrid';
 
 const styles = StyleSheet.create({
   map: {
@@ -56,11 +57,11 @@ class NativeMapper extends Component {
   }
 
   onRegionChange(newLoc) {
-    console.log('onRegionChange ', newLoc);
+    // console.log('onRegionChange ', newLoc);
   }
 
   onRegionChangeComplete(newLoc) {
-    console.log('onRegionChangeComplete ', newLoc);
+    // console.log('onRegionChangeComplete ', newLoc);
   }
 
   render() {
@@ -72,8 +73,9 @@ class NativeMapper extends Component {
     const initialRegion = {
       latitude: currentPosition.latitude,
       longitude: currentPosition.longitude,
-      latitudeDelta: 0.002,
-      longitudeDelta: 0.002,
+      // TODO - account for device dimensions (i.e. we should show more heightwise)
+      latitudeDelta: 0.004,
+      longitudeDelta: 0.004,
     };
 
     return (
@@ -104,6 +106,7 @@ class NativeMapper extends Component {
           heading={currentHeading}
         />
         <TargetMarker/>
+        {createGrid(currentPosition)}
       </MapView>
     );
   }
