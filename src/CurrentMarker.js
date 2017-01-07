@@ -12,6 +12,8 @@ const styles = {
 
 class CurrentMarker extends Component {
   render() {
+    // TODO - saw this facing the wrong direction while walking. possibly heading
+    // is only 180 degrees, or we have a problem with negative or something??
     const rotation = {
       transform: [
         { rotate: (this.props.heading - 90) + 'deg' }

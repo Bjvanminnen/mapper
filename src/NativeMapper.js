@@ -61,7 +61,7 @@ class NativeMapper extends Component {
   }
 
   onRegionChangeComplete(newLoc) {
-    // console.log('onRegionChangeComplete ', newLoc);
+    // console.log('onRegionChangeComplete  ', newLoc);
   }
 
   render() {
@@ -73,15 +73,17 @@ class NativeMapper extends Component {
     const initialRegion = {
       latitude: currentPosition.latitude,
       longitude: currentPosition.longitude,
-      // TODO - account for device dimensions (i.e. we should show more heightwise)
+      // latitudeDelta will ultimately get set to set something else under the
+      // covers
       latitudeDelta: 0.004,
-      longitudeDelta: 0.004,
+      longitudeDelta: 0.004 ,
     };
 
     return (
       <MapView
         style={styles.map}
-        initialRegion={initialRegion}
+        region={initialRegion}
+        followsUserLocation={true}
         showsPointsOfInterest={false}
         showsBuildings={false}
         showsTraffic={false}

@@ -37,10 +37,8 @@ const generateSquare = (topLeft, size) => {
  * Creates a grid of MapView.Polygons
  */
 export default function createGrid(currentPosition) {
-  const delta = 0.0001;
+  const delta = 0.0005;
   const start = roundedPos(currentPosition, delta);
-  console.log('cp ', currentPosition);
-  console.log('start ', start);
 
   const radius = 5;
   const cells = [];
