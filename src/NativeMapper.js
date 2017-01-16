@@ -57,11 +57,9 @@ class NativeMapper extends Component {
   }
 
   onRegionChange(newLoc) {
-    // console.log('onRegionChange ', newLoc);
   }
 
   onRegionChangeComplete(newLoc) {
-    // console.log('onRegionChangeComplete  ', newLoc);
   }
 
   render() {
@@ -70,25 +68,32 @@ class NativeMapper extends Component {
       return null;
     }
 
+    // TODO - overlay image on top of map (perhaps semi opaque?)
+    // TODO - fog of war?
     const initialRegion = {
       latitude: currentPosition.latitude,
       longitude: currentPosition.longitude,
       // latitudeDelta will ultimately get set to set something else under the
       // covers
+      // TODO - at 0.008 map initially loads with all of USA zoomed for some reason
       latitudeDelta: 0.004,
       longitudeDelta: 0.004 ,
     };
 
+    // TODO - validate "followsUserLocation" at some point (doesnt seem to work like i expect)
     return (
       <MapView
         style={styles.map}
         region={initialRegion}
-        followsUserLocation={true}
+        followsUserLocation={false}
         showsPointsOfInterest={false}
         showsBuildings={false}
         showsTraffic={false}
         showsIndoors={false}
         pitchEnabled={false}
+        scrollEnabled={false}
+        rotateEnabled={false}
+        zoomEnabled={false}
         onRegionChange={this.onRegionChange}
         onRegionChangeComplete={this.onRegionChangeComplete}
       >
