@@ -68,9 +68,7 @@ class NativeMapper extends Component {
       return null;
     }
 
-    // TODO - overlay image on top of map (perhaps semi opaque?)
-    // TODO - fog of war?
-    const initialRegion = {
+    const region = {
       latitude: currentPosition.latitude,
       longitude: currentPosition.longitude,
       // latitudeDelta will ultimately get set to set something else under the
@@ -84,8 +82,8 @@ class NativeMapper extends Component {
     return (
       <MapView
         style={styles.map}
-        region={initialRegion}
-        followsUserLocation={false}
+        region={region}
+        followsUserLocation={true}
         showsPointsOfInterest={false}
         showsBuildings={false}
         showsTraffic={false}
@@ -94,6 +92,8 @@ class NativeMapper extends Component {
         scrollEnabled={false}
         rotateEnabled={false}
         zoomEnabled={false}
+        minCameraDistance={500}
+        maxCameraDistance={2000}
         onRegionChange={this.onRegionChange}
         onRegionChangeComplete={this.onRegionChangeComplete}
       >

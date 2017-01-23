@@ -1,17 +1,22 @@
 import getStore from './getStore';
 import { RNLocation as Location } from 'NativeModules';
 
+/**
+ * Redux duck module for how precise we want our location updates to be.
+ */
+const INITIAL_DISTANCE = 1;
+
 const SET_DISTANCE = 'distance/SET_DISTANCE';
 export const setDistance = distance => ({ type: SET_DISTANCE, distance });
 
-export default function distance(state=1, action) {
+export default function distance(state=INITIAL_DISTANCE, action) {
   if (action.type === SET_DISTANCE) {
     return action.distance;
   }
   return state;
 }
 
-// Not sure if this i the right place for this
+// Not sure if this is the right place for this
 export const bindDistanceFilter = () => {
   const store = getStore();
   let lastDistance = store.getState().distance;
