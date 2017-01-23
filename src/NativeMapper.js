@@ -44,9 +44,6 @@ class NativeMapper extends Component {
 
   constructor(props) {
     super(props);
-
-    this.onRegionChange = this.onRegionChange.bind(this);
-    this.onRegionChangeComplete = this.onRegionChangeComplete.bind(this);
   }
 
   componentDidUpdate() {
@@ -54,12 +51,6 @@ class NativeMapper extends Component {
     if (currentPosition && targets.length === 0) {
       createTarget(currentPosition);
     }
-  }
-
-  onRegionChange(newLoc) {
-  }
-
-  onRegionChangeComplete(newLoc) {
   }
 
   render() {
@@ -94,8 +85,6 @@ class NativeMapper extends Component {
         zoomEnabled={false}
         minCameraDistance={500}
         maxCameraDistance={2000}
-        onRegionChange={this.onRegionChange}
-        onRegionChangeComplete={this.onRegionChangeComplete}
       >
         {oldPositions.map((pos, index) => (
           <MapView.Marker
