@@ -23,29 +23,11 @@ class MapScreen extends Component {
     navigator: React.PropTypes.object.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.pressDebug = this.pressDebug.bind(this);
-  }
-
-  pressDebug() {
-    this.props.navigator.push({
-      back: true,
-      component: DebugScreen,
-    });
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <LocationUpdater/>
         <NativeMapper/>
-        <Button
-          onPress={this.pressDebug}
-          title="Debug"
-          backgroundColor="blue"
-        />
         <DebugOverlay/>
         <Modal/>
       </View>

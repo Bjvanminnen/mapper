@@ -3,6 +3,8 @@ import { View, Text, PanResponder } from 'react-native';
 import { connect } from 'react-redux';
 import { distanceDiff } from './distanceUtils';
 
+const SHOW_OVERLAY = false;
+
 const styles = {
   main: {
     position: 'absolute',
@@ -58,6 +60,9 @@ class DebugOverlay extends Component {
   }
 
   render() {
+    if (!SHOW_OVERLAY) {
+      return null;
+    }
     const style = [
       styles.main,
       {
