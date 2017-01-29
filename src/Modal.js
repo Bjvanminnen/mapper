@@ -9,6 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { closeModal } from './redux/modal';
 import TargetSelectedModal from './TargetSelectedModal';
+import Inventory from './Inventory';
 
 const styles = {
   main: {
@@ -46,10 +47,13 @@ class Modal extends Component {
     }
 
     let contents = {};
+    // TODO - starting to think this cant be the right approach.
     if (screenId === 'text') {
       contents = <Text>{data}</Text>;
     } else if (screenId === 'target_selected') {
       contents = <TargetSelectedModal/>;
+    } else if (screenId === 'inventory') {
+      contents = <Inventory/>;
     } else {
       throw new Error('unknown screenId: ' + screenId);
     }

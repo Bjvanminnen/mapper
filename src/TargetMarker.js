@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createTarget } from './redux/targets';
 import MapView from 'react-native-maps';
 import { isWithin } from './distanceUtils';
-import { setText } from './redux/modal';
+import { setModal } from './redux/modal';
 
 const styles = {
   marker: {
@@ -68,5 +68,5 @@ export default connect(state => ({
   target: state.targets[0]
 }), dispatch => ({
   createTarget: currentPos => dispatch(createTarget(currentPos)),
-  displayModal: text => dispatch(setText(text))
+  displayModal: text => dispatch(setModal(text))
 }))(TargetMarker);

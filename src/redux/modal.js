@@ -1,5 +1,5 @@
 const SET_MODAL = 'modal/SET_MODAL';
-export const setText = (screenId, data) => ({ type: SET_MODAL, screenId, data });
+export const setModal = (screenId, data) => ({ type: SET_MODAL, screenId, data });
 
 const CLOSE_MODAL = 'modal/CLOSE_MODAL';
 export const closeModal = () => ({ type: CLOSE_MODAL });

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {
-  View,
   TouchableHighlight,
   Text
 } from 'react-native';
-
+import { connect } from 'react-redux';
+import { setModal } from './redux/modal';
 
 const styles = {
   main: {
@@ -23,12 +23,23 @@ const styles = {
 };
 
 class Toolbelt extends Component {
+  constructor(props) {
+    super(props);
+
+    this.openInventory = this.openInventory.bind(this);
+  }
+
+  openInventory() {
+    const { dispatch } = this.props;
+    dispatch(setModal('inventory'));
+  }
+
   // Currently just one button, but eventually multiple?
   render() {
     return (
       <TouchableHighlight
         style={styles.main}
-        onPress={() => console.log('pressed')}
+        onPress={this.openInventory}
       >
         <Text style={styles.text}>I</Text>
       </TouchableHighlight>
@@ -36,4 +47,5 @@ class Toolbelt extends Component {
   }
 }
 
-export default Toolbelt;
+export default connect(state => ({
+}))(Toolbelt);

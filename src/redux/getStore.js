@@ -5,6 +5,7 @@ import distance from './distance';
 import positions from './positions';
 import targets from './targets';
 import modal from './modal';
+import inventory from './inventory';
 
 let store = null;
 export default function getStore() {
@@ -16,7 +17,8 @@ export default function getStore() {
       distance,
       positions,
       targets,
-      modal
+      modal,
+      inventory
     }), applyMiddleware(logger));
   }
 
