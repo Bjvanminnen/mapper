@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { createTarget } from './redux/targets';
 import MapView from 'react-native-maps';
 import { isWithin } from './distanceUtils';
+import { setText } from './redux/modal';
 
 const styles = {
   marker: {
@@ -36,11 +37,12 @@ class TargetMarker extends Component {
 
   onPress() {
     const { currentPosition, target, createTarget } = this.props;
-    const isClose = isWithin(target, currentPosition, 40);
 
-    if (isClose) {
-      createTarget(currentPosition);
-    }
+    this.props.displayModal('This is a test');
+    // const isClose = isWithin(target, currentPosition, 40);
+    // if (isClose) {
+    //   createTarget(currentPosition);
+    // }
   }
 
   render() {
@@ -69,5 +71,6 @@ export default connect(state => ({
   currentPosition: state.positions.current,
   target: state.targets[0]
 }), dispatch => ({
-  createTarget: currentPos => dispatch(createTarget(currentPos))
+  createTarget: currentPos => dispatch(createTarget(currentPos)),
+  displayModal: text => dispatch(setText(text))
 }))(TargetMarker);

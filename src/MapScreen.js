@@ -18,19 +18,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const longString = '' +
-`This is a long string.
-
-It has multiple paragraphs that go on and on and such.
-
-Lorem ipsum, etcetera etcera.
-
-How do you like them apples?
-
-Actually, I'm allergic to apples, so I don't like them very much at all. Do you
-happen to have opinions on apples?
-`;
-
 class MapScreen extends Component {
   static propTypes = {
     navigator: React.PropTypes.object.isRequired,
@@ -60,9 +47,7 @@ class MapScreen extends Component {
           backgroundColor="blue"
         />
         <DebugOverlay/>
-        <Modal
-          text={longString + longString + longString}
-        />
+        <Modal/>
       </View>
     );
   }

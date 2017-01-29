@@ -6,6 +6,8 @@ import {
   Text,
   Button
 } from 'react-native';
+import { connect } from 'react-redux';
+import { closeModal } from './redux/modal';
 
 const styles = {
   main: {
@@ -35,22 +37,8 @@ class Modal extends Component {
     text: React.PropTypes.string.isRequired
   };
 
-  constructor(props) {
-    super(props);
-
-    this.onClose = this.onClose.bind(this);
-
-    this.state = {
-      open: true
-    }
-  }
-
-  onClose() {
-    this.setState({open: false});
-  }
-
   render() {
-    if (!this.state.open) {
+    if (!this.props.text) {
       return null;
     }
 
@@ -63,7 +51,7 @@ class Modal extends Component {
           </Text>
           <Button
             title="Close"
-            onPress={this.onClose}
+            onPress={this.props.closeModal}
           />
         </ScrollView>
       </View>
@@ -71,4 +59,10 @@ class Modal extends Component {
   }
 }
 
-export default Modal;
+export default connect(state => ({
+  text: state.modal.text
+}), dispatch => ({
+  closeModal() {
+    dispatch(closeModal());
+  }
+}))(Modal);
