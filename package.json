@@ -22,7 +22,7 @@
     "babel-preset-react-native": "1.9.1",
     "chai": "^3.5.0",
     "jest": "18.0.0",
-    "react-native-maps": "file:///Users/brent/git/fun/forks/react-native-maps",
+    "react-native-maps": "git+https://github.com/Bjvanminnen/react-native-maps.git#v0.12.2_brent",
     "react-test-renderer": "15.4.1"
   },
   "jest": {
