@@ -11,6 +11,7 @@ import DebugOverlay from './DebugOverlay';
 import DebugScreen from './DebugScreen';
 import LocationUpdater from './LocationUpdater';
 import Modal from './Modal';
+import Toolbelt from './Toolbelt';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +29,7 @@ class MapScreen extends Component {
       <View style={styles.container}>
         <LocationUpdater/>
         <NativeMapper/>
+        <Toolbelt/>
         <DebugOverlay/>
         <Modal/>
       </View>
