@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { closeModal } from './redux/modal';
+import TargetSelectedModal from './TargetSelectedModal';
 
 const styles = {
   main: {
@@ -34,21 +35,30 @@ const styles = {
 
 class Modal extends Component {
   static propTypes = {
-    text: React.PropTypes.string.isRequired
+    data: React.PropTypes.object,
+    screenId: React.PropTypes.string.isRequired
   };
 
   render() {
-    if (!this.props.text) {
+    const { data, screenId } = this.props;
+    if (screenId === '') {
       return null;
+    }
+
+    let contents = {};
+    if (screenId === 'text') {
+      contents = <Text>{data}</Text>;
+    } else if (screenId === 'target_selected') {
+      contents = <TargetSelectedModal/>;
+    } else {
+      throw new Error('unknown screenId: ' + screenId);
     }
 
     return (
       <View style={styles.main}>
         <View style={styles.background}/>
         <ScrollView style={styles.modal}>
-          <Text>
-            {this.props.text}
-          </Text>
+          {contents}
           <Button
             title="Close"
             onPress={this.props.closeModal}
@@ -60,7 +70,8 @@ class Modal extends Component {
 }
 
 export default connect(state => ({
-  text: state.modal.text
+  data: state.modal.data,
+  screenId: state.modal.screenId
 }), dispatch => ({
   closeModal() {
     dispatch(closeModal());

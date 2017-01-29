@@ -38,11 +38,7 @@ class TargetMarker extends Component {
   onPress() {
     const { currentPosition, target, createTarget } = this.props;
 
-    this.props.displayModal('This is a test');
-    // const isClose = isWithin(target, currentPosition, 40);
-    // if (isClose) {
-    //   createTarget(currentPosition);
-    // }
+    this.props.displayModal('target_selected');
   }
 
   render() {

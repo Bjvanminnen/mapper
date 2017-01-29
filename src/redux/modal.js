@@ -1,25 +1,28 @@
-const SET_TEXT = 'modal/SET_TEXT';
-export const setText = text => ({ type: SET_TEXT, text });
+const SET_MODAL = 'modal/SET_MODAL';
+export const setText = (screenId, data) => ({ type: SET_MODAL, screenId, data });
 
 const CLOSE_MODAL = 'modal/CLOSE_MODAL';
 export const closeModal = () => ({ type: CLOSE_MODAL });
 
 const initialState = {
-  text: ''
+  screenId: '',
+  data: null
 };
 
 export default function modal(state = initialState, action) {
-  if (action.type === SET_TEXT) {
+  if (action.type === SET_MODAL) {
     return {
       ...state,
-      text: action.text
+      screenId: action.screenId,
+      data: action.data
     };
   }
 
   if (action.type === CLOSE_MODAL) {
     return {
       ...state,
-      text: ''
+      screenId: '',
+      data: null
     };
   }
 
