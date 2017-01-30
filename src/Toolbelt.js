@@ -11,14 +11,15 @@ const styles = {
     backgroundColor: 'brown',
     position: 'absolute',
     bottom: 10,
-    right: 10,
+    // right: 10,
+    left: 10
   },
   text: {
     color: 'white',
     fontSize: 34,
     fontFamily: 'Courier',
     paddingLeft: 5,
-    paddingRight: 5
+    paddingRight: 5,
   }
 };
 

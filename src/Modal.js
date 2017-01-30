@@ -11,6 +11,7 @@ import { closeModal } from './redux/modal';
 import TargetSelectedModal from './TargetSelectedModal';
 import Inventory from './Inventory';
 
+// TODO - modal is smaller if it can get away with it
 const styles = {
   main: {
     position: 'absolute',
