@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
-import { addOrb, OrbType } from './redux/orbs';
+import { addOrb, closeOrb, OrbType } from './redux/orbs';
 import OrbMarker from './OrbMarker';
 import CurrentMarker from './CurrentMarker';
 import createGrid from './createGrid';
@@ -42,6 +42,7 @@ class NativeMapper extends Component {
     orbs: React.PropTypes.array.isRequired, // TODO
 
     addOrb: React.PropTypes.func.isRequired,
+    closeOrb: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -60,7 +61,7 @@ class NativeMapper extends Component {
   }
 
   render() {
-    const { currentPosition, currentHeading, oldPositions, orbs } = this.props;
+    const { currentPosition, currentHeading, oldPositions, orbs, closeOrb } = this.props;
     if (!currentPosition) {
       return null;
     }
@@ -108,17 +109,19 @@ class NativeMapper extends Component {
           heading={currentHeading}
         />
         {orbs.map((orb, index) => (
-          <OrbMarker
-            key={index}
+          !orb.visited && <OrbMarker
+            key={orb.id}
+            orbId={orb.id}
             userPosition={currentPosition}
             markerPosition={{
               latitude: orb.lat,
               longitude: orb.long
             }}
             type={orb.type}
+            closeOrb={closeOrb}
           />
         ))}
-        {createGrid(currentPosition)}
+        {/*createGrid(currentPosition)*/}
       </MapView>
     );
   }
@@ -130,5 +133,6 @@ export default connect(state => ({
   oldPositions: state.positions.historical,
   orbs: state.orbs.toJS()
 }), {
-  addOrb
+  addOrb,
+  closeOrb
 })(NativeMapper);

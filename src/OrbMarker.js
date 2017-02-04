@@ -42,12 +42,29 @@ export default class OrbMarker extends Component {
   static propTypes = {
     userPosition: PropTypes.object.isRequired,
     markerPosition: PropTypes.object.isRequired,
-    type: PropTypes.oneOf(Object.keys(OrbType)).isRequired
+    type: PropTypes.oneOf(Object.keys(OrbType)).isRequired,
+    orbId: PropTypes.number.isRequired,
+    closeOrb: PropTypes.func.isRequired
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.onPress = this.onPress.bind(this);
+  }
+
+  onPress() {
+    if (!this.isClose) {
+      return;
+    }
+
+    const { closeOrb, orbId } = this.props;
+    closeOrb(orbId);
   }
 
   render() {
     const { userPosition, markerPosition, type } = this.props;
-    const isClose = isWithin(userPosition, markerPosition, 40);
+    this.isClose = isWithin(userPosition, markerPosition, 40);
 
     const backStyle = orbColor[type];
 
@@ -55,12 +72,13 @@ export default class OrbMarker extends Component {
       <MapView.Marker
         key="target"
         coordinate={markerPosition}
+        onPress={this.onPress}
       >
         <View
           style={[
             styles.markerBackground,
             backStyle,
-            !isClose && styles.outOfRange
+            !this.isClose && styles.outOfRange
           ]}>
           <Text style={[styles.marker]}>
             T
