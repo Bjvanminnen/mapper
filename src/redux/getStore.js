@@ -4,6 +4,7 @@ import createLogger from 'redux-logger';
 import distance from './distance';
 import positions from './positions';
 import targets from './targets';
+import orbs from './orbs';
 import modal from './modal';
 import inventory from './inventory';
 
@@ -17,6 +18,7 @@ export default function getStore() {
       distance,
       positions,
       targets,
+      orbs,
       modal,
       inventory
     }), applyMiddleware(logger));

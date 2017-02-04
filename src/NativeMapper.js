@@ -7,10 +7,11 @@ import {
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
-import { createTarget } from './redux/targets';
-import TargetMarker from './TargetMarker';
+import { addOrb, OrbType } from './redux/orbs';
+import OrbMarker from './OrbMarker';
 import CurrentMarker from './CurrentMarker';
 import createGrid from './createGrid';
+import { destinationPoint } from './distanceUtils';
 
 const styles = StyleSheet.create({
   map: {
@@ -38,8 +39,9 @@ class NativeMapper extends Component {
     currentPosition: LatLong,
     currentHeading: React.PropTypes.number,
     oldPositions: React.PropTypes.arrayOf(LatLong).isRequired,
-    targets: React.PropTypes.arrayOf(LatLong),
-    createTarget: React.PropTypes.func.isRequired
+    orbs: React.PropTypes.array.isRequired, // TODO
+
+    addOrb: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -47,14 +49,18 @@ class NativeMapper extends Component {
   }
 
   componentDidUpdate() {
-    const { currentPosition, targets, createTarget } = this.props;
-    if (currentPosition && targets.length === 0) {
-      createTarget(currentPosition);
+    const { currentPosition, addOrb, orbs } = this.props;
+    if (currentPosition && orbs.length === 0) {
+      Object.keys(OrbType).forEach(type => {
+        const angle = Math.random() * 360;
+        const dest = destinationPoint(currentPosition, 50, angle);
+        addOrb(dest.latitude, dest.longitude, type);
+      });
     }
   }
 
   render() {
-    const { currentPosition, currentHeading, oldPositions } = this.props;
+    const { currentPosition, currentHeading, oldPositions, orbs } = this.props;
     if (!currentPosition) {
       return null;
     }
@@ -101,7 +107,17 @@ class NativeMapper extends Component {
           pos={currentPosition}
           heading={currentHeading}
         />
-        <TargetMarker/>
+        {orbs.map((orb, index) => (
+          <OrbMarker
+            key={index}
+            userPosition={currentPosition}
+            markerPosition={{
+              latitude: orb.lat,
+              longitude: orb.long
+            }}
+            type={orb.type}
+          />
+        ))}
         {createGrid(currentPosition)}
       </MapView>
     );
@@ -112,7 +128,7 @@ export default connect(state => ({
   currentPosition: state.positions.current,
   currentHeading: state.positions.heading,
   oldPositions: state.positions.historical,
-  targets: state.targets
-}), dispatch => ({
-  createTarget: currentPos => dispatch(createTarget(currentPos))
-}))(NativeMapper);
+  orbs: state.orbs.toJS()
+}), {
+  addOrb
+})(NativeMapper);
