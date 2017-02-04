@@ -43,7 +43,6 @@ export default class OrbMarker extends Component {
     userPosition: PropTypes.object.isRequired,
     markerPosition: PropTypes.object.isRequired,
     type: PropTypes.oneOf(Object.keys(OrbType)).isRequired,
-    orbId: PropTypes.number.isRequired,
     closeOrb: PropTypes.func.isRequired
   }
 
@@ -58,8 +57,7 @@ export default class OrbMarker extends Component {
       return;
     }
 
-    const { closeOrb, orbId } = this.props;
-    closeOrb(orbId);
+    this.props.closeOrb();
   }
 
   render() {
