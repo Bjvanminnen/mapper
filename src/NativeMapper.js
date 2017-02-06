@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import {
   StyleSheet,
   View,
@@ -13,6 +14,8 @@ import OrbMarker from './OrbMarker';
 import CurrentMarker from './CurrentMarker';
 import createGrid from './createGrid';
 import { destinationPoint } from './distanceUtils';
+
+const SHOW_OLD_POSITIONS = false;
 
 const styles = StyleSheet.create({
   map: {
@@ -52,12 +55,15 @@ class NativeMapper extends Component {
 
   componentDidUpdate() {
     const { currentPosition, addOrb, orbs } = this.props;
+    const types = Object.keys(OrbType);
     if (currentPosition && orbs.length === 0) {
-      Object.keys(OrbType).forEach(type => {
+      for (let i = 0; i < 40; i++) {
+        const type = _.sample(types);
         const angle = Math.random() * 360;
-        const dest = destinationPoint(currentPosition, 50, angle);
+        const distance = Math.random() * 400 + 50;
+        const dest = destinationPoint(currentPosition, distance, angle);
         addOrb(dest.latitude, dest.longitude, type);
-      });
+      }
     }
   }
 
@@ -94,7 +100,7 @@ class NativeMapper extends Component {
         minCameraDistance={500}
         maxCameraDistance={2000}
       >
-        {oldPositions.map((pos, index) => (
+        {SHOW_OLD_POSITIONS && oldPositions.map((pos, index) => (
           <MapView.Marker
             key={index}
             title={index.toString()}

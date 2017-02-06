@@ -38,6 +38,8 @@ const orbColor = {
   }
 };
 
+// TODO - markers dont change size as we zoom
+
 export default class OrbMarker extends Component {
   static propTypes = {
     userPosition: PropTypes.object.isRequired,
@@ -62,7 +64,7 @@ export default class OrbMarker extends Component {
 
   render() {
     const { userPosition, markerPosition, type } = this.props;
-    this.isClose = isWithin(userPosition, markerPosition, 40);
+    this.isClose = isWithin(userPosition, markerPosition, 20);
 
     const backStyle = orbColor[type];
 
