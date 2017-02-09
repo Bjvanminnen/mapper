@@ -14,6 +14,7 @@ import OrbMarker from './OrbMarker';
 import CurrentMarker from './CurrentMarker';
 import createGrid from './createGrid';
 import { destinationPoint } from './distanceUtils';
+import generateOrbs from './generateOrbs';
 
 const SHOW_OLD_POSITIONS = false;
 
@@ -57,13 +58,9 @@ class NativeMapper extends Component {
     const { currentPosition, addOrb, orbs } = this.props;
     const types = Object.keys(OrbType);
     if (currentPosition && orbs.length === 0) {
-      for (let i = 0; i < 40; i++) {
-        const type = _.sample(types);
-        const angle = Math.random() * 360;
-        const distance = Math.random() * 400 + 50;
-        const dest = destinationPoint(currentPosition, distance, angle);
-        addOrb(dest.latitude, dest.longitude, type);
-      }
+      // TODO - generate more orbs as we cross boundaries
+      const orbs = generateOrbs(currentPosition.latitude, currentPosition.longitude, 40);
+      orbs.forEach(({latitude, longitude, type}) => addOrb(latitude, longitude, type));
     }
   }
 

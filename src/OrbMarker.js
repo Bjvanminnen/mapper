@@ -81,7 +81,7 @@ export default class OrbMarker extends Component {
             !this.isClose && styles.outOfRange
           ]}>
           <Text style={[styles.marker]}>
-            T
+            O
           </Text>
         </View>
       </MapView.Marker>

@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
+import Immutable from 'immutable';
 
 import distance from './distance';
 import positions from './positions';
@@ -12,8 +13,22 @@ let store = null;
 export default function getStore() {
   if (!store) {
     const logger = createLogger({
-      collapsed: true
+      collapsed: true,
+      stateTransformer: (state) => {
+        let newState = {};
+
+        for (var i of Object.keys(state)) {
+          if (Immutable.Iterable.isIterable(state[i])) {
+            newState[i] = state[i].toJS();
+          } else {
+            newState[i] = state[i];
+          }
+        };
+
+        return newState;
+      }
     });
+
     store = createStore(combineReducers({
       distance,
       positions,
