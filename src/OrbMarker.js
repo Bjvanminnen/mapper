@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Text, View } from 'react-native';
 import MapView from 'react-native-maps';
 import { isWithin } from './distanceUtils';
-import { OrbType } from './redux/orbs';
+import { OrbType } from './orb';
 
 const styles = {
   marker: {

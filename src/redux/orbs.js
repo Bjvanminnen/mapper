@@ -1,10 +1,5 @@
 import { List, Record } from 'immutable';
-
-export const OrbType = {
-  Red: 'Red',
-  Green: 'Green',
-  Blue: 'Blue'
-};
+import { OrbType } from '../orb';
 
 const Orb = Record({
   lat: 0,

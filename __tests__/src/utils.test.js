@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { floor } from '../../src/generateOrbs';
+import { floor } from '../../src/utils';
 
 describe('floor', () => {
   it('round down for positive numbers', () => {

@@ -1,10 +1,8 @@
-import { OrbType } from './redux/orbs';
+import { OrbType } from './orb';
+import { floor } from './utils';
 import _ from 'lodash';
 
-export function floor(number, nearest) {
-  const multiples = Math.floor(number / nearest);
-  return multiples * nearest;
-}
+// TODO - this belongs elsewhere
 
 /**
  * Generates a set of orbs within a square box. That square has a height/width
