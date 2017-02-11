@@ -1,5 +1,5 @@
 import seedrandom from 'seedrandom';
-import { floor } from './utils';
+import { floor, random } from './utils';
 
 export const OrbType = {
   Red: 'Red',
@@ -8,6 +8,7 @@ export const OrbType = {
 };
 
 const SECRET = 'secret';
+const MIN_DURATION = 1000 * 60 * 5; // 5 minutes
 const MAX_DURATION = 1000 * 60 * 20; // 20 minutes
 const CELL_SIZE = 0.01;
 
@@ -28,9 +29,16 @@ export function getTimings(currentTime) {
   // TODO : timings for previous block as well
 
   const seed = SECRET + blockStart;
-  const genNum = seendrandom(seed);
+  const genNum = seedrandom(seed);
 
+  const numTimings = 3; // could be randomized
 
-
-
+  let timings = [];
+  for (let i = 0; i < numTimings; i++) {
+    timings.push({
+      startTime: blockStart + random(0, MAX_DURATION, genNum),
+      duration: random(MIN_DURATION, MAX_DURATION, genNum)
+    });
+  }
+  return timings;
 }
