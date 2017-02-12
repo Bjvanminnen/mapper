@@ -20,6 +20,9 @@ const styles = {
   },
   outOfRange: {
     opacity: 0.3
+  },
+  outOfTime: {
+    opacity: 0.1
   }
 };
 
@@ -54,7 +57,8 @@ export default class OrbMarker extends Component {
   }
 
   onPress() {
-    if (!this.isClose) {
+    console.log(this.props.orb.id);
+    if (!this.isClose || !this.inTime) {
       return;
     }
 
@@ -63,9 +67,17 @@ export default class OrbMarker extends Component {
 
   render() {
     const { userPosition, orb } = this.props;
+
     this.isClose = isWithin(userPosition, orb, 20);
 
     const backStyle = orbColor[orb.orbType];
+
+    // TODO - technically we should probably pass in current time from somewhere
+    const now = (new Date()).getTime();
+    this.inTime = true;
+    if (now < orb.startTime || now > orb.startTime + orb.duration) {
+      this.inTime = false;
+    }
 
     return (
       <MapView.Marker
@@ -77,7 +89,8 @@ export default class OrbMarker extends Component {
           style={[
             styles.markerBackground,
             backStyle,
-            !this.isClose && styles.outOfRange
+            !this.isClose && styles.outOfRange,
+            !this.inTime && styles.outOfTime
           ]}>
           <Text style={[styles.marker]}>
             O

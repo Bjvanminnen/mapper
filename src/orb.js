@@ -38,9 +38,9 @@ export function getRandomOrbs(currentLatitude, currentLongitude, currentTime, n=
   const seed = SECRET + time + latitude + longitude;
   const genNum = seedrandom(seed);
 
-  let timings = [];
+  let orbs = [];
   for (let i = 0; i < n; i++) {
-    timings.push({
+    orbs.push({
       startTime: time + random(0, MAX_DURATION, genNum),
       duration: random(MIN_DURATION, MAX_DURATION, genNum),
       latitude: latitude + random(0, CELL_SIZE, genNum),
@@ -48,5 +48,6 @@ export function getRandomOrbs(currentLatitude, currentLongitude, currentTime, n=
       orbType: OrbType[orbTypes[randomInt(0, orbTypes.length, genNum)]]
     });
   }
-  return timings;
+  console.log(orbs);
+  return orbs;
 }
