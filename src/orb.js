@@ -1,4 +1,5 @@
 import seedrandom from 'seedrandom';
+import { PropTypes } from 'react';
 import { floor, random, randomInt } from './utils';
 
 export const OrbType = {
@@ -8,18 +9,18 @@ export const OrbType = {
 };
 const orbTypes = Object.keys(OrbType);
 
+export const OrbShape = PropTypes.shape({
+  latitude: PropTypes.number.isRequired,
+  longitude: PropTypes.number.isRequired,
+  orbType: PropTypes.oneOf(Object.keys(OrbType)).isRequired,
+  startTime: PropTypes.number.isRequired,
+  duration: PropTypes.number.isRequired,
+});
+
 const SECRET = 'secret';
 const MIN_DURATION = 1000 * 60 * 5; // 5 minutes
 const MAX_DURATION = 1000 * 60 * 20; // 20 minutes
 const CELL_SIZE = 0.01;
-
-export const orb = ({latitude, longitude, orbType, startTime, duration}) => ({
-  latitude,
-  longitude,
-  orbType,
-  startTime,
-  duration
-});
 
 /**
  * Divide time into blocks of MAX_DURATION.

@@ -2,20 +2,20 @@ import { List, Record } from 'immutable';
 import { OrbType } from '../orb';
 
 const Orb = Record({
-  lat: 0,
-  long: 0,
-  type: OrbType.Red,
+  latitude: 0,
+  longitude: 0,
+  orbType: OrbType.Red,
+  startTime: 0,
+  duration: 0,
   id: -1,
   visited: false
 });
 
 
 const ADD_ORB = 'orbs/ADD_ORB';
-export const addOrb = (lat, long, orbType) => ({
+export const addOrb = orb => ({
   type: ADD_ORB,
-  lat,
-  long,
-  orbType
+  orb
 });
 
 const CLOSE_ORB = 'orbs/CLOSE_ORB';
@@ -25,11 +25,8 @@ const initialState = List();
 
 export default function reducer(state = initialState, action) {
   if (action.type === ADD_ORB) {
-    const { lat, long, orbType } = action;
     return state.push(new Orb({
-      lat,
-      long,
-      type: orbType,
+      ...action.orb,
       id: state.size,
       visited: false
     }));

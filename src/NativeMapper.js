@@ -63,7 +63,7 @@ class NativeMapper extends Component {
       const orbs = getRandomOrbs(currentPosition.latitude, currentPosition.longitude, new Date(), 40);
       // TODO - generate more orbs as we cross boundaries
       // const orbs = generateOrbs(currentPosition.latitude, currentPosition.longitude, 40);
-      orbs.forEach(({latitude, longitude, orbType}) => addOrb(latitude, longitude, orbType));
+      orbs.forEach(orb => addOrb(orb));
     }
   }
 
@@ -119,11 +119,7 @@ class NativeMapper extends Component {
           !orb.visited && <OrbMarker
             key={orb.id}
             userPosition={currentPosition}
-            markerPosition={{
-              latitude: orb.lat,
-              longitude: orb.long
-            }}
-            type={orb.type}
+            orb={orb}
             closeOrb={closeOrb.bind(this, orb)}
           />
         ))}
@@ -144,6 +140,6 @@ export default connect(state => ({
   },
   closeOrb(orb) {
     dispatch(closeOrb(orb.id));
-    dispatch(addItem(orb.type.toLowerCase()));
+    dispatch(addItem(orb.orbType.toLowerCase()));
   }
 }))(NativeMapper);

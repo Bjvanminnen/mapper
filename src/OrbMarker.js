@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Text, View } from 'react-native';
 import MapView from 'react-native-maps';
 import { isWithin } from './distanceUtils';
-import { OrbType } from './orb';
+import { OrbType, OrbShape } from './orb';
 
 const styles = {
   marker: {
@@ -43,8 +43,7 @@ const orbColor = {
 export default class OrbMarker extends Component {
   static propTypes = {
     userPosition: PropTypes.object.isRequired,
-    markerPosition: PropTypes.object.isRequired,
-    type: PropTypes.oneOf(Object.keys(OrbType)).isRequired,
+    orb: OrbShape.isRequired,
     closeOrb: PropTypes.func.isRequired
   }
 
@@ -63,15 +62,15 @@ export default class OrbMarker extends Component {
   }
 
   render() {
-    const { userPosition, markerPosition, type } = this.props;
-    this.isClose = isWithin(userPosition, markerPosition, 20);
+    const { userPosition, orb } = this.props;
+    this.isClose = isWithin(userPosition, orb, 20);
 
-    const backStyle = orbColor[type];
+    const backStyle = orbColor[orb.orbType];
 
     return (
       <MapView.Marker
         key="target"
-        coordinate={markerPosition}
+        coordinate={orb}
         onPress={this.onPress}
       >
         <View
