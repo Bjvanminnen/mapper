@@ -17,7 +17,7 @@
     "react-redux": "^5.0.1",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
-    "seedrandom": "^2.4.2"
+    "seedrandom": "git+https://github.com/mreinstein/seedrandom.git"
   },
   "devDependencies": {
     "babel-jest": "18.0.0",

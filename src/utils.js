@@ -20,3 +20,10 @@ const baseGenerator = () => Math.random();
 export function random(min, max, generator=baseGenerator) {
   return generator() * (max - min) + min;
 }
+
+/**
+ * Return an integer in the range [min, max)
+ */
+export function randomInt(min, max, generator=baseGenerator) {
+  return Math.floor(random(min, max, generator));
+}

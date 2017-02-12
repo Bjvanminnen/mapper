@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { floor, random } from '../../src/utils';
+import { floor, random, randomInt } from '../../src/utils';
 
 describe('floor', () => {
   it('round down for positive numbers', () => {
@@ -23,5 +23,17 @@ describe('random', () => {
   it('returns almost max when generator returns almost 1', () => {
     const generator = () => 0.999999;
     assert.equal(random(5, 10, generator), 9.999995);
+  });
+});
+
+describe('randomInt', () => {
+  it('returns one less than max for high values', () => {
+    const generator = () => 0.99999;
+    assert.equal(randomInt(5, 10, generator), 9);
+  });
+
+  it('returns min for low values', () => {
+    const generator = () => 0.00001;
+    assert.equal(randomInt(5, 10, generator), 5);
   });
 });

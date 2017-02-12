@@ -8,13 +8,15 @@ import {
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
-import { addOrb, closeOrb, OrbType } from './redux/orbs';
+import { addOrb, closeOrb } from './redux/orbs';
+import { OrbType } from './orb';
 import { addItem } from './redux/inventory';
 import OrbMarker from './OrbMarker';
 import CurrentMarker from './CurrentMarker';
 import createGrid from './createGrid';
 import { destinationPoint } from './distanceUtils';
 import generateOrbs from './generateOrbs';
+import { getRandomOrbs } from './orb';
 
 const SHOW_OLD_POSITIONS = false;
 
@@ -58,9 +60,10 @@ class NativeMapper extends Component {
     const { currentPosition, addOrb, orbs } = this.props;
     const types = Object.keys(OrbType);
     if (currentPosition && orbs.length === 0) {
+      const orbs = getRandomOrbs(currentPosition.latitude, currentPosition.longitude, new Date(), 40);
       // TODO - generate more orbs as we cross boundaries
-      const orbs = generateOrbs(currentPosition.latitude, currentPosition.longitude, 40);
-      orbs.forEach(({latitude, longitude, type}) => addOrb(latitude, longitude, type));
+      // const orbs = generateOrbs(currentPosition.latitude, currentPosition.longitude, 40);
+      orbs.forEach(({latitude, longitude, orbType}) => addOrb(latitude, longitude, orbType));
     }
   }
 
