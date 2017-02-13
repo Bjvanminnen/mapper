@@ -27,9 +27,13 @@ const CELL_SIZE = 0.01;
  * Divide world into cells that are CELL_SIZE degrees wide and high.
  * Create n randomized orbs in a way such that the if the provided inputs are in
  * the same time block/location cell, they result in the same outputs.
+ * @param {number} currentLatitude - latitude in degrees
+ * @param {number} currentLongitude - longitude in degress
+ * @param {number} currentTime - current time in ms
+ * @param {number?} n - Number of orbs to generate in this block.
  */
 export function getRandomOrbs(currentLatitude, currentLongitude, currentTime, n=3) {
-  const time = floor(currentTime.getTime(), MAX_DURATION);
+  const time = floor(currentTime, MAX_DURATION);
   const latitude = floor(currentLatitude, CELL_SIZE);
   const longitude = floor(currentLongitude, CELL_SIZE);
 

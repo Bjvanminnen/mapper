@@ -38,8 +38,8 @@ function updateOrbsOnChange(store) {
     if (!initialized && currentPosition) {
       initialized = true;
 
-      // TODO - use time from store
-      const orbs = getRandomOrbs(currentPosition.latitude, currentPosition.longitude, new Date(), 40);
+      const orbs = getRandomOrbs(currentPosition.latitude,
+        currentPosition.longitude, state.time, 40);
       orbs.forEach(orb => store.dispatch(addOrb(orb)));
 
       // add an orb in current location to make testing easier
