@@ -13,7 +13,7 @@ import time from './time';
 let store = null;
 export default function getStore() {
   if (!store) {
-    const logger = createLogger({
+    let logger = createLogger({
       collapsed: true,
       stateTransformer: (state) => {
         let newState = {};
@@ -30,7 +30,7 @@ export default function getStore() {
       }
     });
 
-    store = createStore(combineReducers({
+    const reducers = combineReducers({
       distance,
       positions,
       targets,
@@ -38,7 +38,14 @@ export default function getStore() {
       modal,
       inventory,
       time
-    }), applyMiddleware(logger));
+    });
+
+    const isTestEnv = process.env.NODE_ENV === 'test';
+    if (isTestEnv) {
+      store = createStore(reducers);
+    } else {
+      store = createStore(reducers, applyMiddleware(logger));
+    }
   }
 
   return store;

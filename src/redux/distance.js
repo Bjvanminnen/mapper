@@ -22,7 +22,10 @@ export const bindDistanceFilter = () => {
   store.subscribe(() => {
     if (store.distance !== lastDistance) {
       lastDistance = store.getState().distance;
-      Location.setDistanceFilter(lastDistance);
+      // Location is undefined in tests
+      if (Location) {
+        Location.setDistanceFilter(lastDistance);
+      }
     }
   });
 };

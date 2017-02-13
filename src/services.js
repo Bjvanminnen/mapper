@@ -21,9 +21,11 @@ export function start(store) {
  */
 function updateTimeOnInterval(store) {
   store.dispatch(setTime(getCurrentTime()));
-  setInterval(() => {
-    store.dispatch(setTime(getCurrentTime()));
-  }, TIME_UPDATE_INTERVAL);
+  if (process.env.NODE_ENV !== 'test') {
+    setInterval(() => {
+      store.dispatch(setTime(getCurrentTime()));
+    }, TIME_UPDATE_INTERVAL);
+  }
 }
 
 /**
