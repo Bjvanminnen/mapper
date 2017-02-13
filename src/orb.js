@@ -20,6 +20,7 @@ export const OrbShape = PropTypes.shape({
 const SECRET = 'secret';
 const MIN_DURATION = 1000 * 60 * 5; // 5 minutes
 const MAX_DURATION = 1000 * 60 * 20; // 20 minutes
+const TIME_BLOCK_SIZE = MAX_DURATION;
 const CELL_SIZE = 0.01;
 
 /**
@@ -27,6 +28,11 @@ const CELL_SIZE = 0.01;
  */
 export function orbBlockKey(latitude, longitude, time) {
   return `${latitude}_${longitude}_${time}`;
+}
+
+// TODO - best place for this to live?
+export function timeBlockStart(time) {
+  return floor(time, TIME_BLOCK_SIZE);
 }
 
 /**
@@ -40,11 +46,12 @@ export function orbBlockKey(latitude, longitude, time) {
  * @param {TODO}
  */
 export function getRandomOrbs(currentLatitude, currentLongitude, currentTime, n=3) {
-  const time = floor(currentTime, MAX_DURATION);
+  const time = timeBlockStart(currentTime);
   const latitude = floor(currentLatitude, CELL_SIZE);
   const longitude = floor(currentLongitude, CELL_SIZE);
 
-  const seed = SECRET + orbBlockKey(latitude, longitude, time);
+  const key = orbBlockKey(latitude, longitude, time);
+  const seed = SECRET + key;
   const genNum = seedrandom(seed);
 
   let orbs = [];
@@ -58,8 +65,7 @@ export function getRandomOrbs(currentLatitude, currentLongitude, currentTime, n=
     });
   }
   return {
-    latitude,
-    longitude,
+    key,
     time,
     orbs
   };

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
-import { addOrb, closeOrb } from '../redux/orbs';
+import { addOrb, closeOrb, selectOrbs } from '../redux/orbs';
 import { OrbType } from '../orb';
 import { addItem } from '../redux/inventory';
 import OrbMarker from './OrbMarker';
@@ -60,6 +60,7 @@ class NativeMapper extends Component {
       orbs,
       closeOrb
     } = this.props;
+
     if (!currentPosition) {
       return null;
     }
@@ -126,7 +127,7 @@ export default connect(state => ({
   currentHeading: state.positions.heading,
   currentTime: state.time,
   oldPositions: state.positions.historical,
-  orbs: state.orbs.toJS()
+  orbs: selectOrbs(state.orbs, state.time)
 }), dispatch => ({
   addOrb(lat, long, orbType) {
     dispatch(addOrb(lat, long, orbType));
