@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
-import LabelledInputRow from './LabelledInputRow';
 import Location from 'react-native-location';
-import { setDistance } from './redux/distance';
-import getStore from './redux/getStore';
 import { connect } from 'react-redux';
-import { createTarget } from './redux/targets';
-import { clearPositions } from './redux/positions';
+import LabelledInputRow from './LabelledInputRow';
+import { setDistance } from '../redux/distance';
+import getStore from '../redux/getStore';
+import { createTarget } from '../redux/targets';
+import { clearPositions } from '../redux/positions';
 
 class DebugScreen extends Component {
   static propTypes = {

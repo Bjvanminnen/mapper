@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, Button } from 'react-native';
 import { connect } from 'react-redux';
-import { createTarget } from './redux/targets';
-import { closeModal } from './redux/modal';
+import { createTarget } from '../redux/targets';
+import { closeModal } from '../redux/modal';
 
 class TargetSelectedModal extends Component {
   constructor(props) {

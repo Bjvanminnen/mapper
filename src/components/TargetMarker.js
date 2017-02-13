@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { createTarget } from './redux/targets';
 import MapView from 'react-native-maps';
-import { isWithin } from './distanceUtils';
-import { setModal } from './redux/modal';
+import { createTarget } from '../redux/targets';
+import { isWithin } from '../distanceUtils';
+import { setModal } from '../redux/modal';
 
 const styles = {
   marker: {

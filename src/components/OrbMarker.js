@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, View } from 'react-native';
 import MapView from 'react-native-maps';
-import { isWithin } from './distanceUtils';
-import { OrbType, OrbShape, orbIsActive } from './orb';
+import { isWithin } from '../distanceUtils';
+import { OrbType, OrbShape, orbIsActive } from '../orb';
 
 const styles = {
   marker: {

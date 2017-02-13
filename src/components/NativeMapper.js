@@ -8,15 +8,15 @@ import {
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
-import { addOrb, closeOrb } from './redux/orbs';
-import { OrbType } from './orb';
-import { addItem } from './redux/inventory';
+import { addOrb, closeOrb } from '../redux/orbs';
+import { OrbType } from '../orb';
+import { addItem } from '../redux/inventory';
 import OrbMarker from './OrbMarker';
 import CurrentMarker from './CurrentMarker';
-import createGrid from './createGrid';
-import { destinationPoint } from './distanceUtils';
-import generateOrbs from './generateOrbs';
-import { getRandomOrbs } from './orb';
+import createGrid from '../createGrid';
+import { destinationPoint } from '../distanceUtils';
+import generateOrbs from '../generateOrbs';
+import { getRandomOrbs } from '../orb';
 
 const SHOW_OLD_POSITIONS = false;
 

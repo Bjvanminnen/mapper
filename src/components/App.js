@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Navigator } from 'react-native';
-import MapScreen from './MapScreen';
-import { NavigatorBar, renderScene } from './navigator';
-import getStore from './redux/getStore';
 import { Provider } from 'react-redux';
-import { bindDistanceFilter } from './redux/distance';
-import { bindCurrentTime } from './redux/time';
+import MapScreen from './MapScreen';
+import { NavigatorBar, renderScene } from '../navigator';
+import getStore from '../redux/getStore';
+import { bindDistanceFilter } from '../redux/distance';
+import { bindCurrentTime } from '../redux/time';
 
 // Things TODO
 // Look at speed (behave differently if we think you're driving, etc)

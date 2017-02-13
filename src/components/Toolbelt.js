@@ -4,7 +4,7 @@ import {
   Text
 } from 'react-native';
 import { connect } from 'react-redux';
-import { setModal } from './redux/modal';
+import { setModal } from '../redux/modal';
 
 const styles = {
   main: {

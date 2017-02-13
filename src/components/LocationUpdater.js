@@ -4,7 +4,7 @@ import { DeviceEventEmitter } from 'react-native';
 
 import Location from 'react-native-location';
 
-import { setCurrentPosition } from './redux/positions';
+import { setCurrentPosition } from '../redux/positions';
 
 /**
  * LocationUpdater

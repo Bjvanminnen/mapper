@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, PanResponder } from 'react-native';
 import { connect } from 'react-redux';
-import { distanceDiff } from './distanceUtils';
+import { distanceDiff } from '../distanceUtils';
 
 const SHOW_OVERLAY = false;
 

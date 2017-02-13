@@ -7,7 +7,7 @@ import {
   Button
 } from 'react-native';
 import { connect } from 'react-redux';
-import { closeModal } from './redux/modal';
+import { closeModal } from '../redux/modal';
 import TargetSelectedModal from './TargetSelectedModal';
 import Inventory from './Inventory';
 
