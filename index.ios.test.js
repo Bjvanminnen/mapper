@@ -1,6 +1,6 @@
 import 'react-native';
 import React from 'react';
-import Index from '../index.ios.js';
+import Index from './index.ios.js';
 
 jest.mock('react-native-location', () => ({
   requestAlwaysAuthorization() {},

@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { floor, random, randomInt } from '../../src/utils';
+import { floor, random, randomInt } from './utils';
 
 describe('floor', () => {
   it('round down for positive numbers', () => {

@@ -28,7 +28,7 @@ const OrbsState = Record({
 });
 const initialState = new OrbsState();
 
-// TODO - write/fix tests
+// TODO - write/fix tests (do this next)
 export default function reducer(state = initialState, action) {
   if (action.type === ADD_ORB_BLOCK) {
     const orbBlock = action.orbBlock;

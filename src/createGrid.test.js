@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { roundedNum } from '../../src/createGrid';
+import { roundedNum } from './createGrid';
 
 describe('createGrid', () => {
   it('roundedNum', () => {

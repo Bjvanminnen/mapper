@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { getRandomOrbs } from '../../src/orb';
+import { getRandomOrbs } from './orb';
 
 describe('getRandomOrbs', () => {
   it('consistently returns the same thing', () => {
