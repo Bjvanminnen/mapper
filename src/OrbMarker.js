@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Text, View } from 'react-native';
 import MapView from 'react-native-maps';
 import { isWithin } from './distanceUtils';
-import { OrbType, OrbShape } from './orb';
+import { OrbType, OrbShape, orbIsActive } from './orb';
 
 const styles = {
   marker: {
@@ -29,7 +29,7 @@ const styles = {
 const orbColor = {
   [OrbType.Red]: {
     borderColor: '#570807',
-    backgroundColor: '#ba141188',
+    backgroundColor: '#ba1411',
   },
   [OrbType.Blue]: {
     borderColor: '#0000ff',
@@ -46,51 +46,31 @@ const orbColor = {
 export default class OrbMarker extends Component {
   static propTypes = {
     userPosition: PropTypes.object.isRequired,
+    currentTime: PropTypes.number.isRequired,
     orb: OrbShape.isRequired,
     closeOrb: PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props);
-
-    this.onPress = this.onPress.bind(this);
-  }
-
-  onPress() {
-    console.log(this.props.orb.id);
-    if (!this.isClose || !this.inTime) {
-      return;
-    }
-
-    this.props.closeOrb();
-  }
-
   render() {
-    const { userPosition, orb } = this.props;
+    const { userPosition, currentTime, orb, closeOrb } = this.props;
 
-    this.isClose = isWithin(userPosition, orb, 20);
+    const isClose = isWithin(userPosition, orb, 80);
+    const isActive = orbIsActive(orb, currentTime);
 
     const backStyle = orbColor[orb.orbType];
-
-    // TODO - technically we should probably pass in current time from somewhere
-    const now = (new Date()).getTime();
-    this.inTime = true;
-    if (now < orb.startTime || now > orb.startTime + orb.duration) {
-      this.inTime = false;
-    }
 
     return (
       <MapView.Marker
         key="target"
         coordinate={orb}
-        onPress={this.onPress}
+        onPress={isClose && isActive && closeOrb || (() => {})}
       >
         <View
           style={[
             styles.markerBackground,
             backStyle,
             !this.isClose && styles.outOfRange,
-            !this.inTime && styles.outOfTime
+            !isActive && styles.outOfTime
           ]}>
           <Text style={[styles.marker]}>
             O

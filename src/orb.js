@@ -51,3 +51,15 @@ export function getRandomOrbs(currentLatitude, currentLongitude, currentTime, n=
   console.log(orbs);
   return orbs;
 }
+
+/**
+ * @param {Orb} orb
+ * @param {number} currentTime - in milliseconds
+ * @returns {boolean} True if the current time falls within the orbs active window
+ **/
+export function orbIsActive(orb, currentTime) {
+  if (currentTime < orb.startTime || currentTime > orb.startTime + orb.duration) {
+    return false;
+  }
+  return true;
+}

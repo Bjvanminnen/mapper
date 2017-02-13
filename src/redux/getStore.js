@@ -8,6 +8,7 @@ import targets from './targets';
 import orbs from './orbs';
 import modal from './modal';
 import inventory from './inventory';
+import time from './time';
 
 let store = null;
 export default function getStore() {
@@ -35,7 +36,8 @@ export default function getStore() {
       targets,
       orbs,
       modal,
-      inventory
+      inventory,
+      time
     }), applyMiddleware(logger));
   }
 

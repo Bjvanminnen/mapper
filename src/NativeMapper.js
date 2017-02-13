@@ -45,6 +45,7 @@ class NativeMapper extends Component {
   static propTypes = {
     currentPosition: LatLong,
     currentHeading: React.PropTypes.number,
+    currentTime: React.PropTypes.number.isRequired,
     oldPositions: React.PropTypes.arrayOf(LatLong).isRequired,
     orbs: React.PropTypes.array.isRequired, // TODO
 
@@ -62,13 +63,28 @@ class NativeMapper extends Component {
     if (currentPosition && orbs.length === 0) {
       const orbs = getRandomOrbs(currentPosition.latitude, currentPosition.longitude, new Date(), 40);
       // TODO - generate more orbs as we cross boundaries
-      // const orbs = generateOrbs(currentPosition.latitude, currentPosition.longitude, 40);
       orbs.forEach(orb => addOrb(orb));
+
+      // add an orb in current location to make testing easier
+      addOrb({
+        latitude: currentPosition.latitude,
+        longitude: currentPosition.longitude,
+        startTime: this.props.currentTime + 1000 * 10,
+        duration: 1000 * 20,
+        orbType: OrbType.Red
+      });
     }
   }
 
   render() {
-    const { currentPosition, currentHeading, oldPositions, orbs, closeOrb } = this.props;
+    const {
+      currentPosition,
+      currentHeading,
+      currentTime,
+      oldPositions,
+      orbs,
+      closeOrb
+    } = this.props;
     if (!currentPosition) {
       return null;
     }
@@ -119,6 +135,7 @@ class NativeMapper extends Component {
           !orb.visited && <OrbMarker
             key={orb.id}
             userPosition={currentPosition}
+            currentTime={currentTime}
             orb={orb}
             closeOrb={closeOrb.bind(this, orb)}
           />
@@ -132,6 +149,7 @@ class NativeMapper extends Component {
 export default connect(state => ({
   currentPosition: state.positions.current,
   currentHeading: state.positions.heading,
+  currentTime: state.time,
   oldPositions: state.positions.historical,
   orbs: state.orbs.toJS()
 }), dispatch => ({

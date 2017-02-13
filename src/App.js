@@ -5,6 +5,7 @@ import { NavigatorBar, renderScene } from './navigator';
 import getStore from './redux/getStore';
 import { Provider } from 'react-redux';
 import { bindDistanceFilter } from './redux/distance';
+import { bindCurrentTime } from './redux/time';
 
 // Things TODO
 // Look at speed (behave differently if we think you're driving, etc)
@@ -18,6 +19,7 @@ const initialRoute = {
 
 const store = getStore();
 bindDistanceFilter();
+bindCurrentTime();
 
 export default class App extends Component {
   render() {
