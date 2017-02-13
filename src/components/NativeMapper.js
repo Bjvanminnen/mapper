@@ -15,8 +15,6 @@ import OrbMarker from './OrbMarker';
 import CurrentMarker from './CurrentMarker';
 import createGrid from '../createGrid';
 import { destinationPoint } from '../distanceUtils';
-import generateOrbs from '../generateOrbs';
-import { getRandomOrbs } from '../orb';
 
 const SHOW_OLD_POSITIONS = false;
 
@@ -52,29 +50,6 @@ class NativeMapper extends Component {
     addOrb: React.PropTypes.func.isRequired,
     closeOrb: React.PropTypes.func.isRequired,
   };
-
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidUpdate() {
-    const { currentPosition, addOrb, orbs } = this.props;
-    const types = Object.keys(OrbType);
-    if (currentPosition && orbs.length === 0) {
-      const orbs = getRandomOrbs(currentPosition.latitude, currentPosition.longitude, new Date(), 40);
-      // TODO - generate more orbs as we cross boundaries
-      orbs.forEach(orb => addOrb(orb));
-
-      // add an orb in current location to make testing easier
-      addOrb({
-        latitude: currentPosition.latitude,
-        longitude: currentPosition.longitude,
-        startTime: this.props.currentTime + 1000 * 10,
-        duration: 1000 * 20,
-        orbType: OrbType.Red
-      });
-    }
-  }
 
   render() {
     const {

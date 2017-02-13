@@ -16,7 +16,6 @@ export default function distance(state=INITIAL_DISTANCE, action) {
   return state;
 }
 
-// Not sure if this is the right place for this
 export const bindDistanceFilter = () => {
   const store = getStore();
   let lastDistance = store.getState().distance;

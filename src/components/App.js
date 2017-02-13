@@ -4,8 +4,7 @@ import { Provider } from 'react-redux';
 import MapScreen from './MapScreen';
 import { NavigatorBar, renderScene } from '../navigator';
 import getStore from '../redux/getStore';
-import { bindDistanceFilter } from '../redux/distance';
-import { bindCurrentTime } from '../redux/time';
+import { start as startServices } from '../services';
 
 // Things TODO
 // Look at speed (behave differently if we think you're driving, etc)
@@ -18,8 +17,7 @@ const initialRoute = {
 };
 
 const store = getStore();
-bindDistanceFilter();
-bindCurrentTime();
+startServices(store);
 
 export default class App extends Component {
   render() {

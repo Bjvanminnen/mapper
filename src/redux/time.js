@@ -4,7 +4,6 @@ import getStore from './getStore';
  * Redux duck module that tracks the current time.
  */
 const INITIAL_TIME = 0;
-const UPDATE_INTERVAL = 10 * 1000; // 30 seconds
 
 const SET_TIME = 'distance/SET_TIME';
 export const setTime = time => ({ type: SET_TIME, time });
@@ -16,16 +15,10 @@ export default function distance(state=INITIAL_TIME, action) {
   return state;
 }
 
-function setCurrentTime(store) {
+/**
+ * @returns {number} Current time in milliseconds
+ */
+export function getCurrentTime() {
   const date = new Date();
-  store.dispatch(setTime(date.getTime()));
+  return date.getTime();
 }
-
-// Not sure if this is the right place for this
-export const bindCurrentTime = () => {
-  const store = getStore();
-  setCurrentTime(store);
-  setInterval(() => {
-    setCurrentTime(store);
-  }, UPDATE_INTERVAL);
-};

@@ -48,7 +48,6 @@ export function getRandomOrbs(currentLatitude, currentLongitude, currentTime, n=
       orbType: OrbType[orbTypes[randomInt(0, orbTypes.length, genNum)]]
     });
   }
-  console.log(orbs);
   return orbs;
 }
 
