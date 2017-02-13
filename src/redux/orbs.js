@@ -12,10 +12,10 @@ const Orb = Record({
 });
 
 
-const ADD_ORB = 'orbs/ADD_ORB';
-export const addOrb = orb => ({
-  type: ADD_ORB,
-  orb
+const ADD_ORB_BLOCK = 'orbs/ADD_ORB_BLOCK';
+export const addOrbBlock = orbBlock => ({
+  type: ADD_ORB_BLOCK,
+  orbBlock
 });
 
 const CLOSE_ORB = 'orbs/CLOSE_ORB';
@@ -24,12 +24,15 @@ export const closeOrb = orbId => ({ type: CLOSE_ORB, orbId });
 const initialState = List();
 
 export default function reducer(state = initialState, action) {
-  if (action.type === ADD_ORB) {
-    return state.push(new Orb({
-      ...action.orb,
-      id: state.size,
-      visited: false
-    }));
+  if (action.type === ADD_ORB_BLOCK) {
+    return state.push(
+      ...action.orbBlock.orbs.map((orb, index) => (
+        new Orb({
+        ...orb,
+        id: state.size + index,
+        visited: false
+      })))
+    );
   }
 
   if (action.type === CLOSE_ORB) {

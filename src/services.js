@@ -6,7 +6,7 @@
 import { bindDistanceFilter } from './redux/distance';
 import { getCurrentTime, setTime } from './redux/time';
 import { OrbType, getRandomOrbs } from './orb';
-import { addOrb } from './redux/orbs';
+import { addOrbBlock } from './redux/orbs';
 
 const TIME_UPDATE_INTERVAL = 10 * 1000; // 30 seconds
 
@@ -38,18 +38,18 @@ function updateOrbsOnChange(store) {
     if (!initialized && currentPosition) {
       initialized = true;
 
-      const orbs = getRandomOrbs(currentPosition.latitude,
+      const orbBlock = getRandomOrbs(currentPosition.latitude,
         currentPosition.longitude, state.time, 40);
-      orbs.forEach(orb => store.dispatch(addOrb(orb)));
+      store.dispatch(addOrbBlock(orbBlock));
 
       // add an orb in current location to make testing easier
-      store.dispatch(addOrb({
-        latitude: currentPosition.latitude,
-        longitude: currentPosition.longitude,
-        startTime: state.time + 1000 * 10,
-        duration: 1000 * 20,
-        orbType: OrbType.Red
-      }));
+      // store.dispatch(addOrb({
+      //   latitude: currentPosition.latitude,
+      //   longitude: currentPosition.longitude,
+      //   startTime: state.time + 1000 * 10,
+      //   duration: 1000 * 20,
+      //   orbType: OrbType.Red
+      // }));
     }
   });
 }
